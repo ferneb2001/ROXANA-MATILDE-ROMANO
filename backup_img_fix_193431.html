@@ -345,106 +345,188 @@
         }
     
         
-        
-        
-        /* CORRECCIÓN ESPECÍFICA IMÁGENES MÓVILES */
+        /* OPTIMIZACIONES MÓVILES */
         @media (max-width: 768px) {
-            /* Todas las imágenes responsivas */
-            img {
-                max-width: 100% !important;
-                height: auto !important;
-                display: block !important;
-                margin: 0 auto !important;
-                box-sizing: border-box !important;
+            body {
+                font-size: 16px !important;
+                line-height: 1.5 !important;
+                padding: 10px !important;
+                margin: 0 !important;
             }
             
-            /* Contenedores de páginas */
-            .page {
+            .container {
                 width: 100% !important;
                 max-width: 100% !important;
                 padding: 10px !important;
-                margin: 5px 0 !important;
-                box-sizing: border-box !important;
-                overflow: hidden !important;
-            }
-            
-            /* Contenedor principal del libro */
-            .book-container, .container {
-                width: 100% !important;
-                max-width: 100% !important;
-                padding: 5px !important;
                 margin: 0 !important;
-                overflow-x: hidden !important;
             }
             
-            /* Imágenes del catálogo */
-            .work-item img, .catalog-image {
+            .page {
                 width: 100% !important;
-                max-width: 280px !important;
+                min-height: auto !important;
+                padding: 15px !important;
+                margin: 10px 0 !important;
+                box-sizing: border-box !important;
+            }
+            
+            h1, h2, h3 {
+                font-size: 1.5em !important;
+                text-align: center !important;
+                margin: 10px 0 !important;
+            }
+            
+            /* Catálogo móvil */
+            .catalog-grid {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 20px !important;
+            }
+            
+            .work-item {
+                width: 100% !important;
+                margin: 0 auto 20px auto !important;
+                text-align: center !important;
+            }
+            
+            .work-item img {
+                width: 100% !important;
+                max-width: 300px !important;
                 height: auto !important;
                 margin: 0 auto 10px auto !important;
+                display: block !important;
             }
             
-            /* Imágenes de certificados */
-            .certificate-item img, .certificate-image {
+            .work-info {
+                padding: 10px !important;
+                text-align: left !important;
+            }
+            
+            .work-info h3 {
+                font-size: 1.2em !important;
+                margin: 5px 0 !important;
+            }
+            
+            .work-info p {
+                font-size: 0.9em !important;
+                margin: 3px 0 !important;
+                line-height: 1.3 !important;
+            }
+            
+            /* Navegación móvil */
+            .nav-button {
+                padding: 15px 20px !important;
+                font-size: 16px !important;
+                margin: 5px !important;
+                min-height: 44px !important;
+                touch-action: manipulation !important;
+            }
+            
+            .nav-buttons {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                gap: 10px !important;
+                padding: 15px !important;
+            }
+            
+            /* Certificados móvil */
+            .certificates-grid {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 20px !important;
+            }
+            
+            .certificate-item {
+                width: 100% !important;
+                max-width: 300px !important;
+                text-align: center !important;
+            }
+            
+            .certificate-item img {
+                width: 100% !important;
+                height: auto !important;
+            }
+            
+            /* Eventos móvil */
+            .event-item {
+                width: 100% !important;
+                margin: 15px 0 !important;
+                padding: 15px !important;
+                border: 1px solid #ddd !important;
+                border-radius: 8px !important;
+            }
+            
+            .event-item img {
                 width: 100% !important;
                 max-width: 250px !important;
                 height: auto !important;
-                margin: 0 auto !important;
-            }
-            
-            /* Imágenes de eventos */
-            .event-item img, .event-image {
-                width: 100% !important;
-                max-width: 240px !important;
-                height: auto !important;
                 margin: 0 auto 10px auto !important;
+                display: block !important;
             }
             
-            /* Imágenes del atelier */
-            .atelier-image, .atelier-photo {
+            /* Datos personales móvil */
+            .contact-item {
+                display: flex !important;
+                align-items: center !important;
+                gap: 10px !important;
+                padding: 10px !important;
+                margin: 5px 0 !important;
+            }
+            
+            .contact-item svg {
+                width: 24px !important;
+                height: 24px !important;
+                flex-shrink: 0 !important;
+            }
+            
+            .contact-item p {
+                font-size: 14px !important;
+                margin: 0 !important;
+            }
+            
+            /* Atelier móvil */
+            .atelier-photo {
                 width: 100% !important;
-                max-width: 260px !important;
+                max-width: 280px !important;
                 height: auto !important;
                 margin: 10px auto !important;
                 display: block !important;
             }
             
-            /* Corrección para imágenes dentro de divs */
-            .page div img, .content img {
-                width: 100% !important;
-                max-width: 300px !important;
-                height: auto !important;
+            /* Zoom móvil */
+            .zoom-overlay {
+                padding: 20px !important;
             }
             
-            /* Evitar desbordamiento horizontal */
-            * {
-                max-width: 100% !important;
-                box-sizing: border-box !important;
-            }
-            
-            html, body {
-                overflow-x: hidden !important;
-                width: 100% !important;
+            .zoomed-image {
+                max-width: 90% !important;
+                max-height: 90% !important;
             }
         }
         
         @media (max-width: 480px) {
-            /* Imágenes aún más pequeñas para celulares muy pequeños */
-            .work-item img, .catalog-image {
-                max-width: 240px !important;
+            body {
+                font-size: 14px !important;
+                padding: 5px !important;
             }
             
-            .certificate-item img, .certificate-image {
-                max-width: 220px !important;
+            .page {
+                padding: 10px !important;
+                margin: 5px 0 !important;
             }
             
-            .event-item img, .event-image {
-                max-width: 200px !important;
+            h1, h2, h3 {
+                font-size: 1.3em !important;
             }
             
-            .atelier-image, .atelier-photo {
-                max-width: 220px !important;
+            .nav-button {
+                padding: 12px 15px !important;
+                font-size: 14px !important;
+            }
+            
+            .work-item img {
+                max-width: 250px !important;
             }
         }
         
