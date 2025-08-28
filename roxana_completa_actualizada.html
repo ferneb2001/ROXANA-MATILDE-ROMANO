@@ -1,0 +1,2644 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roxana Matilde Romano - Artista</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            overflow-x: hidden;
+            background: #f5f5f5;
+        }
+        
+        /* Contenedor principal con scroll horizontal */
+        .book-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            height: 100vh;
+            scroll-behavior: smooth;
+        }
+        
+        /* Cada página ocupa todo el ancho */
+        .page {
+            flex: 0 0 100vw;
+            scroll-snap-align: start;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            position: relative;
+        }
+        
+        /* Colores de fondo para cada página */
+        .page-1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .page-2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
+        .page-3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: #333; }
+        .page-4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: #333; }
+        .page-5 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: #333; }
+        
+        /* Navegación por botones */
+        .nav-buttons {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(0,0,0,0.9);
+        }
+        
+        /* Indicador de página */
+        .page-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            z-index: 1000;
+        }
+        
+        /* Contenido específico */
+        .artist-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 4px solid rgba(255,255,255,0.3);
+        }
+        
+        .contact-info {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .contact-info h2 {
+            margin-bottom: 15px;
+            font-size: 2em;
+        }
+        
+        .contact-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+        }
+        
+        .obra-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .obra-item {
+            background: rgba(255,255,255,0.9);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .obra-img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .contact-artist {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 30px;
+            height: 30px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page {
+                padding: 15px;
+            }
+            .artist-photo {
+                width: 150px;
+                height: 150px;
+            }
+            .obra-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 10px;
+            }
+        }
+        
+        
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #333;
+            font-family: 'Merriweather', serif;
+        }
+        #book {
+            width: 90vw;
+            height: 90vh;
+            position: relative;
+            perspective: 1500px;
+        }
+        .page {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #F7F2E9;
+            transform-style: preserve-3d;
+            transform-origin: left center;
+            transition: transform 0.7s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+            padding: 2em;
+            box-sizing: border-box;
+            backface-visibility: hidden;
+            border-right: 1px solid #ddd;
+        }
+        .page:nth-child(odd) {
+            transform-origin: right center;
+        }
+        .page.flipped {
+            transform: rotateY(-180deg);
+        }
+        .page:nth-child(odd).flipped {
+            transform: rotateY(180deg);
+        }
+        .page-content {
+            width: 100%;
+            height: 100%;
+            padding: 1em;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .page-content img {
+            max-width: 100%;
+            max-height: 80%;
+            object-fit: contain;
+        }
+        .page-content h1, .page-content h2, .page-content h3 {
+            color: #333;
+            text-align: center;
+        }
+        .page-content p, .page-content blockquote {
+            text-align: justify;
+            max-width: 80%;
+            line-height: 1.6;
+            color: #3D3D3D;
+        }
+        .page-content a {
+            color: #D2691E;
+            text-decoration: none;
+        }
+        .page-content.cover {
+            background-color: #2c3e50;
+            color: white;
+        }
+        .page-content.cover h1 {
+            color: white;
+            font-size: 3em;
+        }
+        .page-content.cover h2 {
+            color: #bdc3c7;
+            font-weight: 300;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .grid-container img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border: 1px solid #ddd;
+        }
+        .page-number {
+            position: absolute;
+            bottom: 15px;
+            right: 25px;
+            font-size: 0.8em;
+            color: #888;
+        }
+        #prev-btn, #next-btn {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        #prev-btn { left: 10px; }
+        #next-btn { right: 10px; }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .contact-item svg {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            fill: #D2691E;
+        }
+        .contact-item p {
+            margin: 0;
+            font-size: 1em;
+            text-align: left;
+        }
+        .contact-item a {
+            color: #000;
+        }
+        .artwork-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+        .artwork-page img {
+            max-height: 80%;
+            max-width: 100%;
+            cursor: zoom-in;
+        }
+        .ficha-tecnica {
+            margin-top: 8px;
+            padding: 6px;
+            border-top: 1px solid #ddd;
+            width: 85%;
+            font-size: 0.6em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .ficha-tecnica .artwork-details {
+            text-align: left;
+        }
+        .ficha-tecnica .artwork-details p {
+            margin: 2px 0;
+            text-align: left;
+        }
+        .ficha-tecnica .artwork-details p {
+            margin: 4px 0;
+            text-align: left;
+        }
+        .artwork-title {
+            /* Removed nowrap, hidden, ellipsis */
+        }
+        .whatsapp-button {
+                background: rgba(139, 125, 107, 0.6);
+                color: #f5f5dc;
+                padding: 6px 12px;
+                border: 1px solid rgba(139, 125, 107, 0.8);
+                border-radius: 3px;
+                text-decoration: none;
+                font-size: 11px;
+                font-weight: normal;
+                transition: all 0.3s ease;
+                display: inline-block;
+                margin-top: 8px;
+                opacity: 0.8;
+            }
+            .whatsapp-button:hover {
+                background: rgba(139, 125, 107, 0.85);
+                color: #ffffff;
+                text-decoration: none;
+                opacity: 1;
+            }
+        #lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        #lightbox-image {
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+        #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+        }
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5em;
+            color: #3D3D3D;
+            margin-bottom: 0;
+        }
+        .signature-subtitle {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4em;
+            color: #555;
+            margin-top: 0;
+        }
+        .agenda-container {
+            width: 100%;
+            text-align: center;
+        }
+        .evento-card {
+            background-color: white;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        .evento-card h3 {
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            #book {
+                width: 98vw;
+                height: 95vh;
+            }
+            body {
+                font-size: 14px;
+            }
+            .page-content h1 {
+                font-size: 2em;
+            }
+            .page-content h2 {
+                font-size: 1.5em;
+            }
+            .page-content p, .page-content blockquote {
+                font-size: 0.9em;
+                max-width: 95%;
+            }
+            .signature {
+                font-size: 2.5em;
+            }
+            .signature-subtitle {
+                font-size: 1.2em;
+            }
+            .ficha-tecnica {
+            margin-top: 8px;
+            padding: 6px;
+            border-top: 1px solid #ddd;
+            width: 85%;
+            font-size: 0.6em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+            .ficha-tecnica .artwork-details {
+            text-align: left;
+        }
+        .ficha-tecnica .artwork-details p {
+            margin: 2px 0;
+            text-align: left;
+        }
+            .whatsapp-button {
+                background: rgba(139, 125, 107, 0.6);
+                color: #f5f5dc;
+                padding: 6px 12px;
+                border: 1px solid rgba(139, 125, 107, 0.8);
+                border-radius: 3px;
+                text-decoration: none;
+                font-size: 11px;
+                font-weight: normal;
+                transition: all 0.3s ease;
+                display: inline-block;
+                margin-top: 8px;
+                opacity: 0.8;
+            }
+            .whatsapp-button:hover {
+                background: rgba(139, 125, 107, 0.85);
+                color: #ffffff;
+                text-decoration: none;
+                opacity: 1;
+            }
+            .personal-data-section img {
+                max-width: 60% !important;
+            }
+            .personal-data-section > div {
+                width: 90% !important;
+                text-align: center !important;
+            }
+            .contact-item {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-content h1 {
+                font-size: 1.4em;
+            }
+            .page-content h2 {
+                font-size: 1.3em;
+            }
+            .signature {
+                font-size: 2em;
+            }
+            .signature-subtitle {
+                font-size: 1em;
+            }
+        }
+
+        /* CORRECCIÓN ESPECÍFICA IMÁGENES MÓVILES */
+        @media (max-width: 768px) {
+            /* Todas las imágenes responsivas */
+            img {
+                max-width: 100%;
+                height: auto;
+                display: block;
+                margin: 0 auto !important;
+                box-sizing: border-box !important;
+            }
+            
+            /* Contenedores de páginas */
+            .page {
+                width: 100%;
+                max-width: 100%;
+                padding: 10px !important;
+                margin: 5px 0 !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+            }
+            
+            /* Contenedor principal del libro */
+            .book-container, .container {
+                width: 100%;
+                max-width: 100%;
+                padding: 5px !important;
+                margin: 0 !important;
+                overflow-x: hidden !important;
+            }
+            
+            /* Imágenes del catálogo */
+            .work-item img, .catalog-image {
+                width: 100%;
+                max-width: 280px !important;
+                height: auto;
+                margin: 0 auto 10px auto !important;
+            }
+            
+            /* Imágenes de certificados */
+            .certificate-item img, .certificate-image {
+                width: 100%;
+                max-width: 250px !important;
+                height: auto;
+                margin: 0 auto !important;
+            }
+            
+            /* Imágenes de eventos */
+            .event-item img, .event-image {
+                width: 100%;
+                max-width: 240px !important;
+                height: auto;
+                margin: 0 auto 10px auto !important;
+            }
+            
+            /* Imágenes del atelier */
+            .atelier-image, .atelier-photo {
+                width: 100%;
+                max-width: 260px !important;
+                height: auto;
+                margin: 10px auto !important;
+                display: block;
+            }
+            
+            /* Corrección para imágenes dentro de divs */
+            .page div img, .content img {
+                width: 100%;
+                max-width: 300px !important;
+                height: auto;
+            }
+            
+            /* Evitar desbordamiento horizontal */
+            * {
+                max-width: 100%;
+                box-sizing: border-box !important;
+            }
+            
+            html, body {
+                overflow-x: hidden !important;
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            /* Imágenes aún más pequeñas para celulares muy pequeños */
+            .work-item img, .catalog-image {
+                max-width: 240px !important;
+            }
+            
+            .certificate-item img, .certificate-image {
+                max-width: 220px !important;
+            }
+            
+            .event-item img, .event-image {
+                max-width: 200px !important;
+            }
+            
+            .atelier-image, .atelier-photo {
+                max-width: 220px !important;
+            }
+        }
+        
+
+
+                    a:hover {
+                        background-color: rgba(139, 125, 107, 0.25) !important;
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                    }
+
+        /* OPTIMIZACIONES MÓVILES */
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px !important;
+                line-height: 1.5 !important;
+                padding: 10px !important;
+                margin: 0 !important;
+            }
+            
+            .container {
+                width: 100%;
+                max-width: 100%;
+                padding: 10px !important;
+                margin: 0 !important;
+            }
+            
+            .page {
+                width: 100%;
+                min-height: auto;
+                padding: 15px !important;
+                margin: 10px 0 !important;
+                box-sizing: border-box !important;
+            }
+            
+            h1, h2, h3 {
+                font-size: 1.5em !important;
+                text-align: center !important;
+                margin: 10px 0 !important;
+            }
+            
+            /* Catálogo móvil */
+            .catalog-grid {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 20px !important;
+            }
+            
+            .work-item {
+                width: 100%;
+                margin: 0 auto 20px auto !important;
+                text-align: center !important;
+            }
+            
+            .work-item img {
+                width: 100%;
+                max-width: 300px !important;
+                height: auto;
+                margin: 0 auto 10px auto !important;
+                display: block;
+            }
+            
+            .work-info {
+                padding: 10px !important;
+                text-align: left !important;
+            }
+            
+            .work-info h3 {
+                font-size: 1.2em !important;
+                margin: 5px 0 !important;
+            }
+            
+            .work-info p {
+                font-size: 0.9em !important;
+                margin: 3px 0 !important;
+                line-height: 1.3 !important;
+            }
+            
+            /* Navegación móvil */
+            .nav-button {
+                padding: 15px 20px !important;
+                font-size: 16px !important;
+                margin: 5px !important;
+                min-height: 44px !important;
+                touch-action: manipulation !important;
+            }
+            
+            .nav-buttons {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                gap: 10px !important;
+                padding: 15px !important;
+            }
+            
+            /* Certificados móvil */
+            .certificates-grid {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 20px !important;
+            }
+            
+            .certificate-item {
+                width: 100%;
+                max-width: 300px !important;
+                text-align: center !important;
+            }
+            
+            .certificate-item img {
+                width: 100%;
+                height: auto;
+            }
+            
+            /* Eventos móvil */
+            .event-item {
+                width: 100%;
+                margin: 15px 0 !important;
+                padding: 15px !important;
+                border: 1px solid #ddd !important;
+                border-radius: 8px !important;
+            }
+            
+            .event-item img {
+                width: 100%;
+                max-width: 250px !important;
+                height: auto;
+                margin: 0 auto 10px auto !important;
+                display: block;
+            }
+            
+            /* Datos personales móvil */
+            .contact-item {
+                display: flex !important;
+                align-items: center !important;
+                gap: 10px !important;
+                padding: 10px !important;
+                margin: 5px 0 !important;
+            }
+            
+            .contact-item svg {
+                width: 24px !important;
+                height: 24px !important;
+                flex-shrink: 0 !important;
+            }
+            
+            .contact-item p {
+                font-size: 14px !important;
+                margin: 0 !important;
+            }
+            
+            /* Atelier móvil */
+            .atelier-photo {
+                width: 100%;
+                max-width: 280px !important;
+                height: auto;
+                margin: 10px auto !important;
+                display: block;
+            }
+            
+            /* Zoom móvil */
+            .zoom-overlay {
+                padding: 20px !important;
+            }
+            
+            .zoomed-image {
+                max-width: 90% !important;
+                max-height: 90% !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px !important;
+                padding: 5px !important;
+            }
+            
+            .page {
+                padding: 10px !important;
+                margin: 5px 0 !important;
+            }
+            
+            h1, h2, h3 {
+                font-size: 1.3em !important;
+            }
+            
+            .nav-button {
+                padding: 12px 15px !important;
+                font-size: 14px !important;
+            }
+            
+            .work-item img {
+                max-width: 250px !important;
+            }
+        }
+        
+
+    </style>
+</head>
+<body>
+    <div class="book-container" id="bookContainer">
+        
+        <!-- Página 1: Portada con foto y datos de Roxana -->
+        <div class="page page-1">
+            <img src="path/to/roxana-photo.jpg" alt="Roxana Matilde Romano" class="artist-photo">
+            <div class="contact-info">
+                <h2>ROXANA MATILDE ROMANO</h2>
+                <h3>Artista Visual</h3>
+                <div class="contact-item">
+                    📞 Teléfono: 5492615988180
+                </div>
+                <div class="contact-item">
+                    📧 Email: 5492615988180
+                </div>
+                <div class="contact-item">
+                    📍 Dirección: 5492615988180
+                </div>
+                <div class="contact-item">
+                    📱 WhatsApp: 5492615988180
+                </div>
+                <div class="contact-item">
+                    🎥 YouTube: 5492615988180
+                </div>
+            </div>
+        </div>
+        
+        <!-- Página 2: Biografía/Información del artista -->
+        <div class="page page-2">
+            <h2>Sobre la Artista</h2>
+            <div style="max-width: 600px; text-align: center;">
+                <p>Roxana Matilde Romano 
+     
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #333;
+            font-family: 'Merriweather', serif;
+        }
+        #book {
+            width: 90vw;
+            height: 90vh;
+            position: relative;
+            perspective: 1500px;
+        }
+        .page {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #F7F2E9;
+            transform-style: preserve-3d;
+            transform-origin: left center;
+            transition: transform 0.7s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+            padding: 2em;
+            box-sizing: border-box;
+            backface-visibility: hidden;
+            border-right: 1px solid #ddd;
+        }
+        .page:nth-child(odd) {
+            transform-origin: right center;
+        }
+        .page.flipped {
+            transform: rotateY(-180deg);
+        }
+        .page:nth-child(odd).flipped {
+            transform: rotateY(180deg);
+        }
+        .page-content {
+            width: 100%;
+            height: 100%;
+            padding: 1em;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .page-content img {
+            max-width: 100%;
+            max-height: 80%;
+            object-fit: contain;
+        }
+        .page-content h1, .page-content h2, .page-content h3 {
+            color: #333;
+            text-align: center;
+        }
+        .page-content p, .page-content blockquote {
+            text-align: justify;
+            max-width: 80%;
+            line-height: 1.6;
+            color: #3D3D3D;
+        }
+        .page-content a {
+            color: #D2691E;
+            text-decoration: none;
+        }
+        .page-content.cover {
+            background-color: #2c3e50;
+            color: white;
+        }
+        .page-content.cover h1 {
+            color: white;
+            font-size: 3em;
+        }
+        .page-content.cover h2 {
+            color: #bdc3c7;
+            font-weight: 300;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .grid-container img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border: 1px solid #ddd;
+        }
+        .page-number {
+            position: absolute;
+            bottom: 15px;
+            right: 25px;
+            font-size: 0.8em;
+            color: #888;
+        }
+        #prev-btn, #next-btn {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        #prev-btn { left: 10px; }
+        #next-btn { right: 10px; }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .contact-item svg {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            fill: #D2691E;
+        }
+        .contact-item p {
+            margin: 0;
+            font-size: 1em;
+            text-align: left;
+        }
+        .contact-item a {
+            color: #000;
+        }
+        .artwork-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+        .artwork-page img {
+            max-height: 80%;
+            max-width: 100%;
+            cursor: zoom-in;
+        }
+        .ficha-tecnica {
+            margin-top: 8px;
+            padding: 6px;
+            border-top: 1px solid #ddd;
+            width: 85%;
+            font-size: 0.6em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .ficha-tecnica .artwork-details {
+            text-align: left;
+        }
+        .ficha-tecnica .artwork-details p {
+            margin: 2px 0;
+            text-align: left;
+        }
+        .ficha-tecnica .artwork-details p {
+            margin: 4px 0;
+            text-align: left;
+        }
+        .artwork-title {
+            /* Removed nowrap, hidden, ellipsis */
+        }
+        .whatsapp-button {
+                background: rgba(139, 125, 107, 0.6);
+                color: #f5f5dc;
+                padding: 6px 12px;
+                border: 1px solid rgba(139, 125, 107, 0.8);
+                border-radius: 3px;
+                text-decoration: none;
+                font-size: 11px;
+                font-weight: normal;
+                transition: all 0.3s ease;
+                display: inline-block;
+                margin-top: 8px;
+                opacity: 0.8;
+            }
+            .whatsapp-button:hover {
+                background: rgba(139, 125, 107, 0.85);
+                color: #ffffff;
+                text-decoration: none;
+                opacity: 1;
+            }
+        #lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        #lightbox-image {
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+        #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+        }
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5em;
+            color: #3D3D3D;
+            margin-bottom: 0;
+        }
+        .signature-subtitle {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4em;
+            color: #555;
+            margin-top: 0;
+        }
+        .agenda-container {
+            width: 100%;
+            text-align: center;
+        }
+        .evento-card {
+            background-color: white;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        .evento-card h3 {
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            #book {
+                width: 98vw;
+                height: 95vh;
+            }
+            body {
+                font-size: 14px;
+            }
+            .page-content h1 {
+                font-size: 2em;
+            }
+            .page-content h2 {
+                font-size: 1.5em;
+            }
+            .page-content p, .page-content blockquote {
+                font-size: 0.9em;
+                max-width: 95%;
+            }
+            .signature {
+                font-size: 2.5em;
+            }
+            .signature-subtitle {
+                font-size: 1.2em;
+            }
+            .ficha-tecnica {
+            margin-top: 8px;
+            padding: 6px;
+            border-top: 1px solid #ddd;
+            width: 85%;
+            font-size: 0.6em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+            .ficha-tecnica .artwork-details {
+            text-align: left;
+        }
+        .ficha-tecnica .artwork-details p {
+            margin: 2px 0;
+            text-align: left;
+        }
+            .whatsapp-button {
+                background: rgba(139, 125, 107, 0.6);
+                color: #f5f5dc;
+                padding: 6px 12px;
+                border: 1px solid rgba(139, 125, 107, 0.8);
+                border-radius: 3px;
+                text-decoration: none;
+                font-size: 11px;
+                font-weight: normal;
+                transition: all 0.3s ease;
+                display: inline-block;
+                margin-top: 8px;
+                opacity: 0.8;
+            }
+            .whatsapp-button:hover {
+                background: rgba(139, 125, 107, 0.85);
+                color: #ffffff;
+                text-decoration: none;
+                opacity: 1;
+            }
+            .personal-data-section img {
+                max-width: 60% !important;
+            }
+            .personal-data-section > div {
+                width: 90% !important;
+                text-align: center !important;
+            }
+            .contact-item {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-content h1 {
+                font-size: 1.4em;
+            }
+            .page-content h2 {
+                font-size: 1.3em;
+            }
+            .signature {
+                font-size: 2em;
+            }
+            .signature-subtitle {
+                font-size: 1em;
+            }
+        }
+
+        /* CORRECCIÓN ESPECÍFICA IMÁGENES MÓVILES */
+        @media (max-width: 768px) {
+            /* Todas las imágenes responsivas */
+            img {
+                max-width: 100%;
+                height: auto;
+                display: block;
+                margin: 0 auto !important;
+                box-sizing: border-box !important;
+            }
+            
+            /* Contenedores de páginas */
+            .page {
+                width: 100%;
+                max-width: 100%;
+                padding: 10px !important;
+                margin: 5px 0 !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+            }
+            
+            /* Contenedor principal del libro */
+            .book-container, .container {
+                width: 100%;
+                max-width: 100%;
+                padding: 5px !important;
+                margin: 0 !important;
+                overflow-x: hidden !important;
+            }
+            
+            /* Imágenes del catálogo */
+            .work-item img, .catalog-image {
+                width: 100%;
+                max-width: 280px !important;
+                height: auto;
+                margin: 0 auto 10px auto !important;
+            }
+            
+            /* Imágenes de certificados */
+            .certificate-item img, .certificate-image {
+                width: 100%;
+                max-width: 250px !important;
+                height: auto;
+                margin: 0 auto !important;
+            }
+            
+            /* Imágenes de eventos */
+            .event-item img, .event-image {
+                width: 100%;
+                max-width: 240px !important;
+                height: auto;
+                margin: 0 auto 10px auto !important;
+            }
+            
+            /* Imágenes del atelier */
+            .atelier-image, .atelier-photo {
+                width: 100%;
+                max-width: 260px !important;
+                height: auto;
+                margin: 10px auto !important;
+                display: block;
+            }
+            
+            /* Corrección para imágenes dentro de divs */
+            .page div img, .content img {
+                width: 100%;
+                max-width: 300px !important;
+                height: auto;
+            }
+            
+            /* Evitar desbordamiento horizontal */
+            * {
+                max-width: 100%;
+                box-sizing: border-box !important;
+            }
+            
+            html, body {
+                overflow-x: hidden !important;
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            /* Imágenes aún más pequeñas para celulares muy pequeños */
+            .work-item img, .catalog-image {
+                max-width: 240px !important;
+            }
+            
+            .certificate-item img, .certificate-image {
+                max-width: 220px !important;
+            }
+            
+            .event-item img, .event-image {
+                max-width: 200px !important;
+            }
+            
+            .atelier-image, .atelier-photo {
+                max-width: 220px !important;
+            }
+        }
+        
+ 
+         
+    // Funciones de navegacion del indice
+    function goToObras() {
+        window.currentPageIndex = 5;
+        window.updatePages();
+    }
+
+    function goToCertificados() {
+        var paginaCertificados = 5 + catalogWorks.length + 1;
+        window.currentPageIndex = paginaCertificados;
+        window.updatePages();
+    }
+
+    function goToEventos() {
+        var paginaEventos = 5 + catalogWorks.length + 1 + certificateData.length + 1;
+        window.currentPageIndex = paginaEventos;
+        window.updatePages();
+    }
+
+    function goToAtelier() {
+        var paginaAtelier = 5 + catalogWorks.length + 1 + certificateData.length + 1 + 1 + 1;
+        window.currentPageIndex = paginaAtelier;
+        window.updatePages();
+    }
+     
+ 
+ 
+
+     
+         
+     
+
+     
+         &times; 
+         
+     
+
+     &lt; 
+     &gt; 
+
+     
+        // DATA
+        const eventData = [
+    ];
+        const catalogWorks = [
+            {
+                path: "CATALOGO/CABRA(serie observadores) - óleo sobre tela - 70 cm x 50 cm año 2025.jpg",
+                type: "image",
+                title: "CABRA(serie observadores)",
+                technique: "óleo sobre tela",
+                dimensions: "70 cm x 50 cm año 2025",
+                year: "2025",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/DESCANSO - óleo sobre tela - 50 cm x 70 cm - año 2025.jpg",
+                type: "image",
+                title: "DESCANSO",
+                technique: "óleo sobre tela",
+                dimensions: "50 cm x 70 cm",
+                year: "2025",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Gallo (serie observadores) - óleo sobre tela - 50 cm x 70 cm - año 2025.jpg",
+                type: "image",
+                title: "Gallo (serie observadores)",
+                technique: "óleo sobre tela",
+                dimensions: "50 cm x 70 cm",
+                year: "2025",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/La paradoja del observador - óleo sobre tela - 110 cm x 140 cm - año 2025.jpg",
+                type: "image",
+                title: "La paradoja del observador",
+                technique: "óleo sobre tela",
+                dimensions: "110 cm x 140 cm",
+                year: "2025",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Paloma(serie observadores) - óleo sobre tela - 70 cm x 50 cm - año 2025.jpg",
+                type: "image",
+                title: "Paloma(serie observadores)",
+                technique: "óleo sobre tela",
+                dimensions: "70 cm x 50 cm",
+                year: "2025",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Rata (serie observadores) - óleo sobre tela - 50cm x 70 cm - año 2025.jpg",
+                type: "image",
+                title: "Rata (serie observadores)",
+                technique: "óleo sobre tela",
+                dimensions: "50cm x 70 cm",
+                year: "2025",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/sin título (serie observadores) - óleo sobre tela - 50 cm x 70 cm año 2025.jpg",
+                type: "image",
+                title: "sin título (serie observadores)",
+                technique: "óleo sobre tela",
+                dimensions: "50 cm x 70 cm año 2025",
+                year: "2025",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Zoom (serie observadores) - acrílico sobre tela - 10 cm x 12 cm - año 2025.jpg",
+                type: "image",
+                title: "Zoom (serie observadores)",
+                technique: "acrílico sobre tela",
+                dimensions: "10 cm x 12 cm",
+                year: "2025",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Serie observadores - óleo sobre tela - 150 cm x 165 cm - año 2025.jpg",
+                type: "image",
+                title: "Serie observadores",
+                technique: "óleo sobre tela",
+                dimensions: "150 cm x 165 cm",
+                year: "2025",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Cielo - óleo sobre tela- 70 cm x 100 cm año 2024.jpg",
+                type: "image",
+                title: "Cielo",
+                technique: "óleo sobre tela- 70 cm x 100 cm año 2024",
+                dimensions: "",
+                year: "2024",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Recolectores - óleo sobre tela - 170 cm x 100 cm - año 2023.jpg",
+                type: "image",
+                title: "Recolectores",
+                technique: "óleo sobre tela",
+                dimensions: "170 cm x 100 cm",
+                year: "2023",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Sin título - óleo sobre tela - 155 cm x 125 cm - año 2023.jpg",
+                type: "image",
+                title: "Sin título",
+                technique: "óleo sobre tela",
+                dimensions: "155 cm x 125 cm",
+                year: "2023",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Sin título - óleo sobre tela - 170 cm x 100 cm - año 2023.jpg",
+                type: "image",
+                title: "Sin título",
+                technique: "óleo sobre tela",
+                dimensions: "170 cm x 100 cm",
+                year: "2023",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Vaca - óleo sobre tela - 117 cm x 80 cm - año 2023.jpg",
+                type: "image",
+                title: "Vaca",
+                technique: "óleo sobre tela",
+                dimensions: "117 cm x 80 cm",
+                year: "2023",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/la línea invisible - óleo sobre tela - 120 cm x 140 cm - año 2022.jpg",
+                type: "image",
+                title: "la línea invisible",
+                technique: "óleo sobre tela",
+                dimensions: "120 cm x 140 cm",
+                year: "2022",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Vainilla - óleo sobre tela - 50 cm x 70 cm - año 2022 - colección privada.jpg",
+                type: "image",
+                title: "Vainilla",
+                technique: "óleo sobre tela",
+                dimensions: "50 cm x 70 cm",
+                year: "2022",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/EL OBSTACULO - óleo sobre tela - 109 cm x140 cm - año 2020.jpg",
+                type: "image",
+                title: "EL OBSTACULO",
+                technique: "óleo sobre tela",
+                dimensions: "109 cm x140 cm",
+                year: "2020",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/NATURALEZA MUERTA - óleo sobre tela - 50x56 - 2020.jpg",
+                type: "image",
+                title: "NATURALEZA MUERTA",
+                technique: "óleo sobre tela",
+                dimensions: "",
+                year: "2020",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/PANOPTICO - óleo sobre tela - 140x200 - 2020.jpg",
+                type: "image",
+                title: "PANOPTICO",
+                technique: "óleo sobre tela",
+                dimensions: "",
+                year: "2020",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/EL ESTANTE - óleo sobre tela -   44 cm x 50 cm año 2019.jpg",
+                type: "image",
+                title: "EL ESTANTE",
+                technique: "óleo sobre tela",
+                dimensions: "  44 cm x 50 cm año 2019",
+                year: "2019",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/HERENCIA - óleo sobre tela - 140 cm x 111 cm  - año 2019.jpg",
+                type: "image",
+                title: "HERENCIA",
+                technique: "óleo sobre tela",
+                dimensions: "140 cm x 111 cm ",
+                year: "2019",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/RECUERDO - óleo sobre tela - 67 cm x 72 cm - año  2019.jpg",
+                type: "image",
+                title: "RECUERDO",
+                technique: "óleo sobre tela",
+                dimensions: "67 cm x 72 cm",
+                year: "2019",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/serie NAVEGADORES  II - 34 cm x 47 cm  año 2019 - colección privada.jpg",
+                type: "image",
+                title: "serie NAVEGADORES  II",
+                technique: "",
+                dimensions: "34 cm x 47 cm  año 2019",
+                year: "2019",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/Sujeto - óleo sobre tela - 100 cm x125 cm -año 2019 - colección privada.jpg",
+                type: "image",
+                title: "Sujeto",
+                technique: "óleo sobre tela",
+                dimensions: "100 cm x125 cm -año 2019",
+                year: "2019",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/El hacedor - carbonilla y acrílico sobre tela - 60 cm x 100 cm - año 2018.jpg",
+                type: "image",
+                title: "El hacedor",
+                technique: "carbonilla y acrílico sobre tela",
+                dimensions: "60 cm x 100 cm",
+                year: "2018",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/La duda - óleo sobre tela - 44 cm x 57 cm año 2018.jpg",
+                type: "image",
+                title: "La duda",
+                technique: "óleo sobre tela",
+                dimensions: "44 cm x 57 cm año 2018",
+                year: "2018",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/La sinceridad de la sombra - óleo sobre tela -   110x140cm - año 2018.jpg",
+                type: "image",
+                title: "La sinceridad de la sombra",
+                technique: "óleo sobre tela",
+                dimensions: "  110x140cm",
+                year: "2018",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/SAGRADA FAMILIA - óleo sobre tela - 110x180 - 2018.jpg",
+                type: "image",
+                title: "SAGRADA FAMILIA",
+                technique: "óleo sobre tela",
+                dimensions: "",
+                year: "2018",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/serie TRAPOS   cada - 38cm x 30 cm aprox. - año 2018.jpg",
+                type: "image",
+                title: "serie TRAPOS   cada",
+                technique: "",
+                dimensions: "38cm x 30 cm aprox.",
+                year: "2018",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/EL BURDEL - óleo sobre tela - 120 cm x100 cm  - año  2017.jpg",
+                type: "image",
+                title: "EL BURDEL",
+                technique: "óleo sobre tela",
+                dimensions: "120 cm x100 cm ",
+                year: "2017",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/ESTO ES MENTIRA - óleo sobre tela - 112 cm x 200 cm  - año 2017.jpg",
+                type: "image",
+                title: "ESTO ES MENTIRA",
+                technique: "óleo sobre tela",
+                dimensions: "112 cm x 200 cm ",
+                year: "2017",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/invaluable - óleo sobre tela - 20 cm x 30 cm - año 2017.JPG",
+                type: "image",
+                title: "invaluable",
+                technique: "óleo sobre tela",
+                dimensions: "20 cm x 30 cm",
+                year: "2017",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/LA SINCERIDAD DE LA SOMBRA II - óleo sobre tela - 111 cm x 131 cm - año 2017.jpg",
+                type: "image",
+                title: "LA SINCERIDAD DE LA SOMBRA II",
+                technique: "óleo sobre tela",
+                dimensions: "111 cm x 131 cm",
+                year: "2017",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Matias - óleo sobre tela - 56 cm x 56 cm - año 2017.jpg",
+                type: "image",
+                title: "Matias",
+                technique: "óleo sobre tela",
+                dimensions: "56 cm x 56 cm",
+                year: "2017",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/MEMO - óleo sobre tela - 99 cm x 180 cm - año 2017.jpg",
+                type: "image",
+                title: "MEMO",
+                technique: "óleo sobre tela",
+                dimensions: "99 cm x 180 cm",
+                year: "2017",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Poyecto Humano - óleo sobre tela  -  19x80cm año 2017.jpg",
+                type: "image",
+                title: "Poyecto Humano",
+                technique: "óleo sobre tela ",
+                dimensions: " 19x80cm año 2017",
+                year: "2017",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Samantha y los pajaros - óleo sobre tela - 121 cm x 102 cm año 2017.jpg",
+                type: "image",
+                title: "Samantha y los pajaros",
+                technique: "óleo sobre tela",
+                dimensions: "121 cm x 102 cm año 2017",
+                year: "2017",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/sin titulo - óleo sobre tela - 149 cm x 99 cm año 2017.jpg",
+                type: "image",
+                title: "sin titulo",
+                technique: "óleo sobre tela",
+                dimensions: "149 cm x 99 cm año 2017",
+                year: "2017",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Sin título - boceto - año 2017.JPG",
+                type: "image",
+                title: "Sin título",
+                technique: "",
+                dimensions: "",
+                year: "2017",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Sin título - óleo sobre tela - 140 cm x 100 cm - año 2017.jpg",
+                type: "image",
+                title: "Sin título",
+                technique: "óleo sobre tela",
+                dimensions: "140 cm x 100 cm",
+                year: "2017",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Sin título - óleo sobre tela- 20 cm x 30 cm - año 2017.jpg",
+                type: "image",
+                title: "Sin título",
+                technique: "óleo sobre tela- 20 cm x 30 cm",
+                dimensions: "",
+                year: "2017",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/2016 - óleo sobre tela - 120 cm x 210 cm  año 2016.jpg",
+                type: "image",
+                title: "2016",
+                technique: "óleo sobre tela",
+                dimensions: "120 cm x 210 cm  año 2016",
+                year: "2016",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/DESCARTES  - óleo sobre tela - 103 cm x 183 cm año 2016.jpg",
+                type: "image",
+                title: "DESCARTES ",
+                technique: "óleo sobre tela",
+                dimensions: "103 cm x 183 cm año 2016",
+                year: "2016",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/El silencio - óleo sobre tela -  62 cm x 49 cm - año 2016.jpg",
+                type: "image",
+                title: "El silencio",
+                technique: "óleo sobre tela",
+                dimensions: " 62 cm x 49 cm",
+                year: "2016",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/EUGENIA - óleo sobre tela - 64x99 - 2016.jpg",
+                type: "image",
+                title: "EUGENIA",
+                technique: "óleo sobre tela",
+                dimensions: "",
+                year: "2016",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Jerusalén - año 2016 - colección privada.jpg",
+                type: "image",
+                title: "Jerusalén",
+                technique: "",
+                dimensions: "",
+                year: "2016",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/LAS CICATRICES DE MATILDE - óleo sobre tela - 52 cm x 89cm año 2016 - colección privada.jpg",
+                type: "image",
+                title: "LAS CICATRICES DE MATILDE",
+                technique: "óleo sobre tela",
+                dimensions: "52 cm x 89cm año 2016",
+                year: "2016",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/serie INESTABILIDAD I - óleo sobre tela -     76 cm x 84 cm - año 2016.jpg",
+                type: "image",
+                title: "serie INESTABILIDAD I",
+                technique: "óleo sobre tela",
+                dimensions: "    76 cm x 84 cm",
+                year: "2016",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Sin nombre - óleo sobre tela  -  43 cm x 64cm año 2016.jpg",
+                type: "image",
+                title: "Sin nombre",
+                technique: "óleo sobre tela ",
+                dimensions: " 43 cm x 64cm año 2016",
+                year: "2016",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/ASÍ EN LA TIERRA COMO EN EL CIELO - óleo sobre tela - 110 cm x 120 cm - año 2015.JPG",
+                type: "image",
+                title: "ASÍ EN LA TIERRA COMO EN EL CIELO",
+                technique: "óleo sobre tela",
+                dimensions: "110 cm x 120 cm",
+                year: "2015",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/CACO MERLO - óleo sobre tela - año 2015 - colección privada.jpg",
+                type: "image",
+                title: "CACO MERLO",
+                technique: "óleo sobre tela",
+                dimensions: "",
+                year: "2015",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/Modelo - óleo sobre tela - 120 cm x 80 cm - año 2015.JPG",
+                type: "image",
+                title: "Modelo",
+                technique: "óleo sobre tela",
+                dimensions: "120 cm x 80 cm",
+                year: "2015",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/sin titulo - óleo sobre tela - 130 cm x100 cm - año 2015.jpg",
+                type: "image",
+                title: "sin titulo",
+                technique: "óleo sobre tela",
+                dimensions: "130 cm x100 cm",
+                year: "2015",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/CARA A CARA - óleo sobre tela  - 61 cm x 56 cm año 2014.jpg",
+                type: "image",
+                title: "CARA A CARA",
+                technique: "óleo sobre tela ",
+                dimensions: "61 cm x 56 cm año 2014",
+                year: "2014",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/EL TAMBOR - óleo sobre tela - 102 cm x 200 cm  - año 2014.jpg",
+                type: "image",
+                title: "EL TAMBOR",
+                technique: "óleo sobre tela",
+                dimensions: "102 cm x 200 cm ",
+                year: "2014",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Judith en el cuarto de Holofernes - óleo sobre tela -   120 cm x 210 cm    año 2014.jpg",
+                type: "image",
+                title: "Judith en el cuarto de Holofernes",
+                technique: "óleo sobre tela",
+                dimensions: "  120 cm x 210 cm    año 2014",
+                year: "2014",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/La permanencia de Artemisia - óleo sobre tela -   120cmx210cm año 2014.jpg",
+                type: "image",
+                title: "La permanencia de Artemisia",
+                technique: "óleo sobre tela",
+                dimensions: "  120cmx210cm año 2014",
+                year: "2014",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/LUNA DE MIEL EN BERGHOFF - óleo sobre tela - 96x60 - 2014 - colección privada.jpg",
+                type: "image",
+                title: "LUNA DE MIEL EN BERGHOFF",
+                technique: "óleo sobre tela",
+                dimensions: "",
+                year: "2014",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/Sin título - acrílico sobre lienzo - 100 cm x 120 cm - año  2014 - colección privada.JPG",
+                type: "image",
+                title: "Sin título",
+                technique: "acrílico sobre lienzo",
+                dimensions: "100 cm x 120 cm",
+                year: "2014",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/Sin título - óleo sobre tela - 70 cm x 50 cm - año 2014 - colección privada.JPG",
+                type: "image",
+                title: "Sin título",
+                technique: "óleo sobre tela",
+                dimensions: "70 cm x 50 cm",
+                year: "2014",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/De mis entretelas - óleo sobre tela -100cm x 200 cm - año 2013.jpg",
+                type: "image",
+                title: "De mis entretelas",
+                technique: "óleo sobre tela -100cm x 200 cm",
+                dimensions: "",
+                year: "2013",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Interior - óleo sobre tela - 50 cm x 80 cm  - año 2013 - colección privada.jpg",
+                type: "image",
+                title: "Interior",
+                technique: "óleo sobre tela",
+                dimensions: "50 cm x 80 cm ",
+                year: "2013",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/Mamá - óleo sobre tela - 50 cm x 80 cm - año 2013.jpg",
+                type: "image",
+                title: "Mamá",
+                technique: "óleo sobre tela",
+                dimensions: "50 cm x 80 cm",
+                year: "2013",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Tía Nena - óleo sobre tela - 50cm x 80 cm - año 2013 - colección privada.jpg",
+                type: "image",
+                title: "Tía Nena",
+                technique: "óleo sobre tela",
+                dimensions: "50cm x 80 cm",
+                year: "2013",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/BAILARINAS - óleo sobre MDF - 100 cm x 150 cm - año 2012 - colección privada.jpg",
+                type: "image",
+                title: "BAILARINAS",
+                technique: "óleo sobre MDF",
+                dimensions: "100 cm x 150 cm",
+                year: "2012",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/Origen y orgullo - óleo sobre MDF año 2012 - colección privada.jpg",
+                type: "image",
+                title: "Origen y orgullo",
+                technique: "óleo sobre MDF año 2012",
+                dimensions: "",
+                year: "2012",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/Origen y orgullo - óleo sobre tela - año 2012 - colección privada.jpg",
+                type: "image",
+                title: "Origen y orgullo",
+                technique: "óleo sobre tela",
+                dimensions: "",
+                year: "2012",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/Origen y orgullo 2 - óleo sobre MDF año 2012 - colección privada.jpg",
+                type: "image",
+                title: "Origen y orgullo 2",
+                technique: "óleo sobre MDF año 2012",
+                dimensions: "",
+                year: "2012",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/Origen y orgullo 3- óleo sobre MDF año 2012 - colección privada.jpg",
+                type: "image",
+                title: "Origen y orgullo 3- óleo sobre MDF año 2012",
+                technique: "",
+                dimensions: "",
+                year: "2012",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/Origen y orgullo 4 - óleo sobre MDF año 2012 - colección privada.jpg",
+                type: "image",
+                title: "Origen y orgullo 4",
+                technique: "óleo sobre MDF año 2012",
+                dimensions: "",
+                year: "2012",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/Origen y orgullo 5 - óleo sobre MDF año 2012 - colección privada.jpg",
+                type: "image",
+                title: "Origen y orgullo 5",
+                technique: "óleo sobre MDF año 2012",
+                dimensions: "",
+                year: "2012",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/Origen y orgullo 6 - óleo sobre MDF año 2012 - colección privada.jpg",
+                type: "image",
+                title: "Origen y orgullo 6",
+                technique: "óleo sobre MDF año 2012",
+                dimensions: "",
+                year: "2012",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/sin titulo - óleo sobre tela - año 2012.jpg",
+                type: "image",
+                title: "sin titulo",
+                technique: "óleo sobre tela",
+                dimensions: "",
+                year: "2012",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/Sin título - óleo sobre MDF - año 2012 - colección privada.jpg",
+                type: "image",
+                title: "Sin título",
+                technique: "óleo sobre MDF",
+                dimensions: "",
+                year: "2012",
+                collection: "Colección privada"
+            },
+            {
+                path: "CATALOGO/SUBURBIO - óleo sobre mdf - 87 cm x 90 cm - año 2012.jpg",
+                type: "image",
+                title: "SUBURBIO",
+                technique: "óleo sobre mdf",
+                dimensions: "87 cm x 90 cm",
+                year: "2012",
+                collection: ""
+            },
+            {
+                path: "CATALOGO/MUTA - 18cm x 24 cm.jpg",
+                type: "image",
+                title: "MUTA",
+                technique: "",
+                dimensions: "18cm x 24 cm",
+                year: "",
+                collection: ""
+            }
+        ];;
+        const certificateData = [
+            "CERTIFICADOS/DIPLOMATURA EN ARTETERAPIA PROFESIONAL.jpg",
+            "CERTIFICADOS/Primer premio Rostros Universales - Obra Retrato Egar Murillo.jpg",
+            "CERTIFICADOS/Certificado Bienal Atuel 2012.jpg",
+            "CERTIFICADOS/Certificado Feria del Libro le Parc 2012.jpg",
+            "CERTIFICADOS/Certificado Maipú y el vino.jpg",
+            "CERTIFICADOS/Muestra Itaka 001.jpg",
+            "CERTIFICADOS/Muestra orígen y orgullo 001.jpg",
+            "CERTIFICADOS/Muestra zenga 001.jpg",
+            "CERTIFICADOS/Selección salón de pintura Juan Gutenberg.jpg",
+            "CERTIFICADOS/muestra otredad.jpg",
+            "CERTIFICADOS/tarjeta resiliencia 001.jpg"
+        ];
+
+        // LOGIC
+        document.addEventListener('DOMContentLoaded', function() {
+            const book = document.getElementById('book');
+            const lightboxOverlay = document.getElementById('lightbox-overlay');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxClose = document.getElementById('lightbox-close');
+            let pageCounter = 0;
+
+            function createPage(content, pageNum) {
+                const page = document.createElement('div');
+                page.className = 'page';
+                page.innerHTML = ` ${content}  ${pageNum} `;
+                book.appendChild(page);
+            }
+            
+            function createMediaPage(media, pageNum) {
+                const message = `Hola Roxana, te escribo sobre tu obra "${media.title}".`;
+                const whatsappLink = `https://wa.me/5492615988180?text=${encodeURIComponent(message)}`;
+                let mediaElement;
+                if (media.type === 'video') {
+                    mediaElement = `  `;
+                } else {
+                    mediaElement = ` `;
+                }
+
+                // Extraer información del nombre del archivo
+                const filename = media.path.split('/').pop();
+                const baseName = filename.split('.')[0]; // Quitar extensión de forma simple
+                const partes = baseName.split(' - ');
+                
+                let titulo = partes[0] || media.title || 'Sin título';
+                let tecnica = media.technique || '';
+                let dimensiones = media.dimensions || '';
+                let año = media.year || '';
+                let coleccion = '';
+                
+                // Buscar específicamente "colección privada" en cualquier parte
+                for (let i = 0; i  
+                        ${mediaElement}
+                         
+                             
+                                  ${titulo}  
+                                ${tecnica ? ` ${tecnica} ` : ''}
+                                ${dimensiones ? ` ${dimensiones} ` : ''}
+                                ${año ? ` ${año} ` : ''}
+                                ${coleccion ? ` ${coleccion} ` : ''}
+                             
+                             Qué te genera esta obra? dialoga con Roxana 
+                         
+                     `;
+                createPage(content, pageNum);
+            }
+
+            function createCertificatePage(imagePath, pageNum) {
+                const content = `
+                     
+                         
+                     `;
+                createPage(content, pageNum);
+            }
+
+            // --- PAGE GENERATION ORDER ---
+            createPage(`  ROXANA MATILDE ROMANO  Artista Plástica  `, ++pageCounter);
+            
+            createPage(`    Datos Personales       roxanamatilderomano@gmail.com         +54 9 261-5988180         @roxanamatilderomano2017   
+                 
+                     
+                         
+                     
+                      @roxanamatilderomano  
+                       Manuel A. Sáez 2101 - Las Heras - Mendoza     `, ++pageCounter);
+            createPage(` Declaración de Artista  "Somos seres complejos, esto motiva mi imaginación generando teorías, poesía, imágenes… Que luego se transforman en obras"  Entiendo la vida como un segmento (inicio-final), la manera en que la transito es la que determinará mi ser. Asumirme en el presente me genera una pregunta: ¿Qué hay después? Estoy, existo, el problema es “El obstáculo”… …Trabajo y me aturdo para sobrevivirlo …Me someto a la realidad y me encierro …Pendular eternamente en la desidia que él me genera, o negar su presencia y navegar en su densitud. Aunque indefectiblemente sigo el camino, siempre me pregunto ¿Qué hay después? `, ++pageCounter);
+            createPage(` Biografía  ROXANA MATILDE ROMANO es nacida en Mendoza en 1969. Ascendente artista visual quien a partir del año 2012 comienza su carrera. Se perfecciona con Eduardo Salinas, Daniel Bernal y Egar Murillo.  Realizó diferentes muestras individuales tales como: “Origen y orgullo”, Salón Malvinas Argentinas. “Resiliencia” en 2013 e “Hipócrita” en 2014 en la Nave Cultural de Mendoza. Durante el año 2014 participó de la muestra “Otredad” en la Alianza Francesa de Mza. En ese mismo año obtuvo el Primer Premio en el 1º Salón de Pintura Pequeño Formato - Tema: "Rostros Universales", y también suma una mención en el Salón de Pintura "Juan Gutenberg".  Participó en numerosas muestras colectivas entre otras: “Arte en construcción I, II y III”. También su obra: “Proyecto Humano”, fue seleccionada en el 37 Salón de Pintura del Consejo Profesional de Ciencias Económicas en Mendoza. En el año 2019, expone en la Legislatura Provincial con la muestra: “BLA BLA”. Una selección de su trabajo fue parte significativa en la Re-inauguración del ECA Espacio Contemporáneo de Arte de Mza, 2021.  "Panóptico", año 2022; "La sombra de lo inútil" año 2023 y “La paradoja del observador” año 2024, tres obras seleccionadas para el salón Vendimia. Obra suya se encuentra en colecciones públicas y privadas siendo su trabajo elogiosamente reconocido por el colectivo artístico. Exposición en forma individual en sala Arteh (Hipercerámico) Mendoza año 2024. `, ++pageCounter);
+            
+            createPage(`
+                 ÍNDICE 
+                 
+                     
+                         
+                            OBRAS
+                         
+                     
+                     
+                         
+                            CERTIFICADOS
+                         
+                     
+                     
+                         
+                            PRÓXIMOS EVENTOS
+                         
+                     
+                     
+                         
+                            CLASES
+                         
+                     
+                 
+                 
+                    a:hover {
+                        background-color: rgba(139, 125, 107, 0.25) !important;
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                    }
+
+        /* OPTIMIZACIONES MÓVILES */
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px !important;
+                line-height: 1.5 !important;
+                padding: 10px !important;
+                margin: 0 !important;
+            }
+            
+            .container {
+                width: 100%;
+                max-width: 100%;
+                padding: 10px !important;
+                margin: 0 !important;
+            }
+            
+            .page {
+                width: 100%;
+                min-height: auto;
+                padding: 15px !important;
+                margin: 10px 0 !important;
+                box-sizing: border-box !important;
+            }
+            
+            h1, h2, h3 {
+                font-size: 1.5em !important;
+                text-align: center !important;
+                margin: 10px 0 !important;
+            }
+            
+            /* Catálogo móvil */
+            .catalog-grid {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 20px !important;
+            }
+            
+            .work-item {
+                width: 100%;
+                margin: 0 auto 20px auto !important;
+                text-align: center !important;
+            }
+            
+            .work-item img {
+                width: 100%;
+                max-width: 300px !important;
+                height: auto;
+                margin: 0 auto 10px auto !important;
+                display: block;
+            }
+            
+            .work-info {
+                padding: 10px !important;
+                text-align: left !important;
+            }
+            
+            .work-info h3 {
+                font-size: 1.2em !important;
+                margin: 5px 0 !important;
+            }
+            
+            .work-info p {
+                font-size: 0.9em !important;
+                margin: 3px 0 !important;
+                line-height: 1.3 !important;
+            }
+            
+            /* Navegación móvil */
+            .nav-button {
+                padding: 15px 20px !important;
+                font-size: 16px !important;
+                margin: 5px !important;
+                min-height: 44px !important;
+                touch-action: manipulation !important;
+            }
+            
+            .nav-buttons {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                gap: 10px !important;
+                padding: 15px !important;
+            }
+            
+            /* Certificados móvil */
+            .certificates-grid {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 20px !important;
+            }
+            
+            .certificate-item {
+                width: 100%;
+                max-width: 300px !important;
+                text-align: center !important;
+            }
+            
+            .certificate-item img {
+                width: 100%;
+                height: auto;
+            }
+            
+            /* Eventos móvil */
+            .event-item {
+                width: 100%;
+                margin: 15px 0 !important;
+                padding: 15px !important;
+                border: 1px solid #ddd !important;
+                border-radius: 8px !important;
+            }
+            
+            .event-item img {
+                width: 100%;
+                max-width: 250px !important;
+                height: auto;
+                margin: 0 auto 10px auto !important;
+                display: block;
+            }
+            
+            /* Datos personales móvil */
+            .contact-item {
+                display: flex !important;
+                align-items: center !important;
+                gap: 10px !important;
+                padding: 10px !important;
+                margin: 5px 0 !important;
+            }
+            
+            .contact-item svg {
+                width: 24px !important;
+                height: 24px !important;
+                flex-shrink: 0 !important;
+            }
+            
+            .contact-item p {
+                font-size: 14px !important;
+                margin: 0 !important;
+            }
+            
+            /* Atelier móvil */
+            .atelier-photo {
+                width: 100%;
+                max-width: 280px !important;
+                height: auto;
+                margin: 10px auto !important;
+                display: block;
+            }
+            
+            /* Zoom móvil */
+            .zoom-overlay {
+                padding: 20px !important;
+            }
+            
+            .zoomed-image {
+                max-width: 90% !important;
+                max-height: 90% !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px !important;
+                padding: 5px !important;
+            }
+            
+            .page {
+                padding: 10px !important;
+                margin: 5px 0 !important;
+            }
+            
+            h1, h2, h3 {
+                font-size: 1.3em !important;
+            }
+            
+            .nav-button {
+                padding: 12px 15px !important;
+                font-size: 14px !important;
+            }
+            
+            .work-item img {
+                max-width: 250px !important;
+            }
+        }
+        
+ 
+            `, ++pageCounter);
+            
+            createPage(' OBRAS ', ++pageCounter);
+            catalogWorks.forEach(media => createMediaPage(media, ++pageCounter));
+            
+            createPage(' CERTIFICADOS ', ++pageCounter);
+            certificateData.forEach(certPath => {
+                createCertificatePage(certPath, ++pageCounter);
+            });
+
+            createPage(' Próximos Eventos ', ++pageCounter);
+            
+            // Sistema híbrido: imagen + texto
+            eventData.forEach(event => {
+                // Buscar si existe imagen para este evento
+                let eventoConImagen = false;
+                let rutaImagen = "";
+                
+                // Buscar imagen basada en título del evento
+                const tituloLimpio = event.title.toLowerCase().replace(/[^a-z0-9]/g, '');
+                
+                // Rutas posibles para imágenes
+                const rutasPosibles = [
+                    `EVENTOS/flyers/${event.title}.jpg`,
+                    `EVENTOS/flyers/${event.title}.jpeg`,
+                    `EVENTOS/flyers/${event.title}.png`,
+                    `EVENTOS/${event.title}.jpg`,
+                    `EVENTOS/${event.title}.jpeg`,
+                    `EVENTOS/${event.title}.png`
+                ];
+                
+                // Por simplicidad, crear página visual para todos los eventos
+                // Si tienen imagen, la mostrarán; si no, mostrarán datos
+                
+                if (event.title.toLowerCase().includes('itaka') || event.title.toLowerCase().includes('muestra')) {
+                    // Crear página con imagen
+                    const imagePath = `EVENTOS/flyers/Muestra Itaka 001.jpg`; // Ajustar según tus archivos
+                    const pageContent = `
+                         
+                             
+                         `;
+                    createPage(pageContent, ++pageCounter);
+                } else {
+                    // Crear página con formato de tarjeta
+                    const pageContent = `
+                         
+                             
+                                 ${event.title} 
+                                 ${event.date} - ${event.place} 
+                                 ${event.description} 
+                             
+                         `;
+                    createPage(pageContent, ++pageCounter);
+                }
+            });
+
+            // New page: Clases de Atelier Cover
+            createPage(`  CLASES  `, ++pageCounter);
+
+            // New page: Atelier Text
+            createPage(`
+                 ATELIER 
+                 Un espacio donde la luz respira… 
+                
+                 
+                     B añado por la generosa luz del sol mendocino, es mucho más que un estudio: es un refugio para el espíritu creativo. Adentrarse en su bohemia es sumergirse en un ambiente introspectivo, en donde tu vocabulario profundo podrá expresarse sobre el lienzo virgen.
+                 
+                
+                 
+                    Ya seas un principiante curioso o un creador experimentado, aquí encontrarás un espacio inspirador y pacífico.
+                 
+                
+                 
+                    Descubre tu potencial y nutre tu talento en un entorno estimulante y acogedor.
+                 
+                
+                 
+                    Estás invitado para que juntos exploremos tu propia abstracción artística.
+                 
+                
+                 
+                    ROXANA MATILDE ROMANO
+                 
+            `, ++pageCounter);
+
+                        // New page: Atelier
+            createPage(`
+                 
+                     
+                 
+            `, ++pageCounter);
+
+            // New page: Img 20250822 Wa0022
+            createPage(`
+                 
+                     
+                 
+            `, ++pageCounter);
+
+            // New page: Imagen De Whatsapp 2025 08 26 A Las 09.59.49 0c37599c
+            createPage(`
+                 
+                     
+                 
+            `, ++pageCounter);
+
+            // New page: Atelier1
+            createPage(`
+                 
+                     
+                 
+            `, ++pageCounter);
+
+            // New page: Atelier2
+            createPage(`
+                 
+                     
+                 
+            `, ++pageCounter);
+
+            // New page: Atelier3
+            createPage(`
+                 
+                     
+                 
+            `, ++pageCounter);
+
+            // New page: Foto Taller
+            createPage(`
+                 
+                     
+                 
+            `, ++pageCounter);
+
+            // New page: Frente Atelier
+            createPage(`
+                 
+                     
+                 
+            `, ++pageCounter);
+
+// EVENT LISTENERS
+            window.pages = book.getElementsByClassName('page');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            window.currentPageIndex = 0;
+
+            function setupEventListeners() {
+                document.querySelectorAll('.artwork-image-zoomable').forEach(img => {
+                    img.addEventListener('dblclick', () => {
+                        lightboxImage.src = img.src;
+                        lightboxOverlay.style.display = 'flex';
+                    });
+                });
+            }
+
+            lightboxClose.addEventListener('click', () => { lightboxOverlay.style.display = 'none'; });
+            lightboxOverlay.addEventListener('click', (e) => { if (e.target === lightboxOverlay) { lightboxOverlay.style.display = 'none'; } });
+
+            window.updatePages = function() {
+                Array.from(window.pages).forEach((page, index) => {
+                    page.style.zIndex = window.pages.length - index;
+                    if (index   { img.src = img.getAttribute('data-src'); img.removeAttribute('data-src'); });
+                }
+            }
+
+            nextBtn.addEventListener('click', () => { if (window.currentPageIndex   { if (window.currentPageIndex > 0) { window.currentPageIndex--; updatePages(); } });
+
+            updatePages();
+        
+        // Funciones de navegación para el índice
+
+        });</p>
+            </div>
+        </div>
+        
+        <!-- Página 3: Catálogo de obras -->
+        <div class="page page-3">
+            <h2>Catálogo de Obras</h2>
+            <div class="obra-grid" id="catalogoObras">
+                <!-- Las obras se cargarán dinámicamente -->
+            </div>
+        </div>
+        
+        <!-- Página 4: Certificados -->
+        <div class="page page-4">
+            <h2>Certificados y Reconocimientos</h2>
+            <div class="obra-grid" id="certificados">
+                <!-- Los certificados se cargarán dinámicamente -->
+            </div>
+        </div>
+        
+        <!-- Página 5: Contacto y enlaces -->
+        <div class="page page-5">
+            <h2>Contacto</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <strong>¿Te interesa mi arte?</strong><br>
+                    Contáctame para consultas, comisiones o adquisiciones
+                </div>
+                <div class="contact-item">
+                    <a href="https://wa.me/5492615988180" style="color: #25D366; text-decoration: none;">
+                        💬 Conversar por WhatsApp
+                    </a>
+                </div>
+                <div class="contact-item">
+                    <a href="mailto:roxanamatilderomano@gmail.com" style="color: #0066cc; text-decoration: none;">
+                        ✉️ Enviar Email
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <!-- Navegación por botones -->
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="previousPage()">← Anterior</button>
+        <button class="nav-btn" onclick="nextPage()">Siguiente →</button>
+    </div>
+    
+    <!-- Indicador de página -->
+    <div class="page-indicator" id="pageIndicator">1 / 5</div>
+    
+    <script>
+        'use strict';
+        
+        // Datos extraídos del código original
+        const catalogWorks = ['{\n                path: "CATALOGO/CABRA(serie observadores) - óleo sobre tela - 70 cm x 50 cm año 2025.jpg",\n                type: "image",\n                title: "CABRA(serie observadores)",\n                technique: "óleo sobre tela",\n                dimensions: "70 cm x 50 cm año 2025",\n                year: "2025",\n                collection: ""\n            }', '{\n                path: "CATALOGO/DESCANSO - óleo sobre tela - 50 cm x 70 cm - año 2025.jpg",\n                type: "image",\n                title: "DESCANSO",\n                technique: "óleo sobre tela",\n                dimensions: "50 cm x 70 cm",\n                year: "2025",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Gallo (serie observadores) - óleo sobre tela - 50 cm x 70 cm - año 2025.jpg",\n                type: "image",\n                title: "Gallo (serie observadores)",\n                technique: "óleo sobre tela",\n                dimensions: "50 cm x 70 cm",\n                year: "2025",\n                collection: ""\n            }', '{\n                path: "CATALOGO/La paradoja del observador - óleo sobre tela - 110 cm x 140 cm - año 2025.jpg",\n                type: "image",\n                title: "La paradoja del observador",\n                technique: "óleo sobre tela",\n                dimensions: "110 cm x 140 cm",\n                year: "2025",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Paloma(serie observadores) - óleo sobre tela - 70 cm x 50 cm - año 2025.jpg",\n                type: "image",\n                title: "Paloma(serie observadores)",\n                technique: "óleo sobre tela",\n                dimensions: "70 cm x 50 cm",\n                year: "2025",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Rata (serie observadores) - óleo sobre tela - 50cm x 70 cm - año 2025.jpg",\n                type: "image",\n                title: "Rata (serie observadores)",\n                technique: "óleo sobre tela",\n                dimensions: "50cm x 70 cm",\n                year: "2025",\n                collection: ""\n            }', '{\n                path: "CATALOGO/sin título (serie observadores) - óleo sobre tela - 50 cm x 70 cm año 2025.jpg",\n                type: "image",\n                title: "sin título (serie observadores)",\n                technique: "óleo sobre tela",\n                dimensions: "50 cm x 70 cm año 2025",\n                year: "2025",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Zoom (serie observadores) - acrílico sobre tela - 10 cm x 12 cm - año 2025.jpg",\n                type: "image",\n                title: "Zoom (serie observadores)",\n                technique: "acrílico sobre tela",\n                dimensions: "10 cm x 12 cm",\n                year: "2025",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Serie observadores - óleo sobre tela - 150 cm x 165 cm - año 2025.jpg",\n                type: "image",\n                title: "Serie observadores",\n                technique: "óleo sobre tela",\n                dimensions: "150 cm x 165 cm",\n                year: "2025",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Cielo - óleo sobre tela- 70 cm x 100 cm año 2024.jpg",\n                type: "image",\n                title: "Cielo",\n                technique: "óleo sobre tela- 70 cm x 100 cm año 2024",\n                dimensions: "",\n                year: "2024",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Recolectores - óleo sobre tela - 170 cm x 100 cm - año 2023.jpg",\n                type: "image",\n                title: "Recolectores",\n                technique: "óleo sobre tela",\n                dimensions: "170 cm x 100 cm",\n                year: "2023",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Sin título - óleo sobre tela - 155 cm x 125 cm - año 2023.jpg",\n                type: "image",\n                title: "Sin título",\n                technique: "óleo sobre tela",\n                dimensions: "155 cm x 125 cm",\n                year: "2023",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Sin título - óleo sobre tela - 170 cm x 100 cm - año 2023.jpg",\n                type: "image",\n                title: "Sin título",\n                technique: "óleo sobre tela",\n                dimensions: "170 cm x 100 cm",\n                year: "2023",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Vaca - óleo sobre tela - 117 cm x 80 cm - año 2023.jpg",\n                type: "image",\n                title: "Vaca",\n                technique: "óleo sobre tela",\n                dimensions: "117 cm x 80 cm",\n                year: "2023",\n                collection: ""\n            }', '{\n                path: "CATALOGO/la línea invisible - óleo sobre tela - 120 cm x 140 cm - año 2022.jpg",\n                type: "image",\n                title: "la línea invisible",\n                technique: "óleo sobre tela",\n                dimensions: "120 cm x 140 cm",\n                year: "2022",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Vainilla - óleo sobre tela - 50 cm x 70 cm - año 2022 - colección privada.jpg",\n                type: "image",\n                title: "Vainilla",\n                technique: "óleo sobre tela",\n                dimensions: "50 cm x 70 cm",\n                year: "2022",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/EL OBSTACULO - óleo sobre tela - 109 cm x140 cm - año 2020.jpg",\n                type: "image",\n                title: "EL OBSTACULO",\n                technique: "óleo sobre tela",\n                dimensions: "109 cm x140 cm",\n                year: "2020",\n                collection: ""\n            }', '{\n                path: "CATALOGO/NATURALEZA MUERTA - óleo sobre tela - 50x56 - 2020.jpg",\n                type: "image",\n                title: "NATURALEZA MUERTA",\n                technique: "óleo sobre tela",\n                dimensions: "",\n                year: "2020",\n                collection: ""\n            }', '{\n                path: "CATALOGO/PANOPTICO - óleo sobre tela - 140x200 - 2020.jpg",\n                type: "image",\n                title: "PANOPTICO",\n                technique: "óleo sobre tela",\n                dimensions: "",\n                year: "2020",\n                collection: ""\n            }', '{\n                path: "CATALOGO/EL ESTANTE - óleo sobre tela -   44 cm x 50 cm año 2019.jpg",\n                type: "image",\n                title: "EL ESTANTE",\n                technique: "óleo sobre tela",\n                dimensions: "  44 cm x 50 cm año 2019",\n                year: "2019",\n                collection: ""\n            }', '{\n                path: "CATALOGO/HERENCIA - óleo sobre tela - 140 cm x 111 cm  - año 2019.jpg",\n                type: "image",\n                title: "HERENCIA",\n                technique: "óleo sobre tela",\n                dimensions: "140 cm x 111 cm ",\n                year: "2019",\n                collection: ""\n            }', '{\n                path: "CATALOGO/RECUERDO - óleo sobre tela - 67 cm x 72 cm - año  2019.jpg",\n                type: "image",\n                title: "RECUERDO",\n                technique: "óleo sobre tela",\n                dimensions: "67 cm x 72 cm",\n                year: "2019",\n                collection: ""\n            }', '{\n                path: "CATALOGO/serie NAVEGADORES  II - 34 cm x 47 cm  año 2019 - colección privada.jpg",\n                type: "image",\n                title: "serie NAVEGADORES  II",\n                technique: "",\n                dimensions: "34 cm x 47 cm  año 2019",\n                year: "2019",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/Sujeto - óleo sobre tela - 100 cm x125 cm -año 2019 - colección privada.jpg",\n                type: "image",\n                title: "Sujeto",\n                technique: "óleo sobre tela",\n                dimensions: "100 cm x125 cm -año 2019",\n                year: "2019",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/El hacedor - carbonilla y acrílico sobre tela - 60 cm x 100 cm - año 2018.jpg",\n                type: "image",\n                title: "El hacedor",\n                technique: "carbonilla y acrílico sobre tela",\n                dimensions: "60 cm x 100 cm",\n                year: "2018",\n                collection: ""\n            }', '{\n                path: "CATALOGO/La duda - óleo sobre tela - 44 cm x 57 cm año 2018.jpg",\n                type: "image",\n                title: "La duda",\n                technique: "óleo sobre tela",\n                dimensions: "44 cm x 57 cm año 2018",\n                year: "2018",\n                collection: ""\n            }', '{\n                path: "CATALOGO/La sinceridad de la sombra - óleo sobre tela -   110x140cm - año 2018.jpg",\n                type: "image",\n                title: "La sinceridad de la sombra",\n                technique: "óleo sobre tela",\n                dimensions: "  110x140cm",\n                year: "2018",\n                collection: ""\n            }', '{\n                path: "CATALOGO/SAGRADA FAMILIA - óleo sobre tela - 110x180 - 2018.jpg",\n                type: "image",\n                title: "SAGRADA FAMILIA",\n                technique: "óleo sobre tela",\n                dimensions: "",\n                year: "2018",\n                collection: ""\n            }', '{\n                path: "CATALOGO/serie TRAPOS   cada - 38cm x 30 cm aprox. - año 2018.jpg",\n                type: "image",\n                title: "serie TRAPOS   cada",\n                technique: "",\n                dimensions: "38cm x 30 cm aprox.",\n                year: "2018",\n                collection: ""\n            }', '{\n                path: "CATALOGO/EL BURDEL - óleo sobre tela - 120 cm x100 cm  - año  2017.jpg",\n                type: "image",\n                title: "EL BURDEL",\n                technique: "óleo sobre tela",\n                dimensions: "120 cm x100 cm ",\n                year: "2017",\n                collection: ""\n            }', '{\n                path: "CATALOGO/ESTO ES MENTIRA - óleo sobre tela - 112 cm x 200 cm  - año 2017.jpg",\n                type: "image",\n                title: "ESTO ES MENTIRA",\n                technique: "óleo sobre tela",\n                dimensions: "112 cm x 200 cm ",\n                year: "2017",\n                collection: ""\n            }', '{\n                path: "CATALOGO/invaluable - óleo sobre tela - 20 cm x 30 cm - año 2017.JPG",\n                type: "image",\n                title: "invaluable",\n                technique: "óleo sobre tela",\n                dimensions: "20 cm x 30 cm",\n                year: "2017",\n                collection: ""\n            }', '{\n                path: "CATALOGO/LA SINCERIDAD DE LA SOMBRA II - óleo sobre tela - 111 cm x 131 cm - año 2017.jpg",\n                type: "image",\n                title: "LA SINCERIDAD DE LA SOMBRA II",\n                technique: "óleo sobre tela",\n                dimensions: "111 cm x 131 cm",\n                year: "2017",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Matias - óleo sobre tela - 56 cm x 56 cm - año 2017.jpg",\n                type: "image",\n                title: "Matias",\n                technique: "óleo sobre tela",\n                dimensions: "56 cm x 56 cm",\n                year: "2017",\n                collection: ""\n            }', '{\n                path: "CATALOGO/MEMO - óleo sobre tela - 99 cm x 180 cm - año 2017.jpg",\n                type: "image",\n                title: "MEMO",\n                technique: "óleo sobre tela",\n                dimensions: "99 cm x 180 cm",\n                year: "2017",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Poyecto Humano - óleo sobre tela  -  19x80cm año 2017.jpg",\n                type: "image",\n                title: "Poyecto Humano",\n                technique: "óleo sobre tela ",\n                dimensions: " 19x80cm año 2017",\n                year: "2017",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Samantha y los pajaros - óleo sobre tela - 121 cm x 102 cm año 2017.jpg",\n                type: "image",\n                title: "Samantha y los pajaros",\n                technique: "óleo sobre tela",\n                dimensions: "121 cm x 102 cm año 2017",\n                year: "2017",\n                collection: ""\n            }', '{\n                path: "CATALOGO/sin titulo - óleo sobre tela - 149 cm x 99 cm año 2017.jpg",\n                type: "image",\n                title: "sin titulo",\n                technique: "óleo sobre tela",\n                dimensions: "149 cm x 99 cm año 2017",\n                year: "2017",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Sin título - boceto - año 2017.JPG",\n                type: "image",\n                title: "Sin título",\n                technique: "",\n                dimensions: "",\n                year: "2017",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Sin título - óleo sobre tela - 140 cm x 100 cm - año 2017.jpg",\n                type: "image",\n                title: "Sin título",\n                technique: "óleo sobre tela",\n                dimensions: "140 cm x 100 cm",\n                year: "2017",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Sin título - óleo sobre tela- 20 cm x 30 cm - año 2017.jpg",\n                type: "image",\n                title: "Sin título",\n                technique: "óleo sobre tela- 20 cm x 30 cm",\n                dimensions: "",\n                year: "2017",\n                collection: ""\n            }', '{\n                path: "CATALOGO/2016 - óleo sobre tela - 120 cm x 210 cm  año 2016.jpg",\n                type: "image",\n                title: "2016",\n                technique: "óleo sobre tela",\n                dimensions: "120 cm x 210 cm  año 2016",\n                year: "2016",\n                collection: ""\n            }', '{\n                path: "CATALOGO/DESCARTES  - óleo sobre tela - 103 cm x 183 cm año 2016.jpg",\n                type: "image",\n                title: "DESCARTES ",\n                technique: "óleo sobre tela",\n                dimensions: "103 cm x 183 cm año 2016",\n                year: "2016",\n                collection: ""\n            }', '{\n                path: "CATALOGO/El silencio - óleo sobre tela -  62 cm x 49 cm - año 2016.jpg",\n                type: "image",\n                title: "El silencio",\n                technique: "óleo sobre tela",\n                dimensions: " 62 cm x 49 cm",\n                year: "2016",\n                collection: ""\n            }', '{\n                path: "CATALOGO/EUGENIA - óleo sobre tela - 64x99 - 2016.jpg",\n                type: "image",\n                title: "EUGENIA",\n                technique: "óleo sobre tela",\n                dimensions: "",\n                year: "2016",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Jerusalén - año 2016 - colección privada.jpg",\n                type: "image",\n                title: "Jerusalén",\n                technique: "",\n                dimensions: "",\n                year: "2016",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/LAS CICATRICES DE MATILDE - óleo sobre tela - 52 cm x 89cm año 2016 - colección privada.jpg",\n                type: "image",\n                title: "LAS CICATRICES DE MATILDE",\n                technique: "óleo sobre tela",\n                dimensions: "52 cm x 89cm año 2016",\n                year: "2016",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/serie INESTABILIDAD I - óleo sobre tela -     76 cm x 84 cm - año 2016.jpg",\n                type: "image",\n                title: "serie INESTABILIDAD I",\n                technique: "óleo sobre tela",\n                dimensions: "    76 cm x 84 cm",\n                year: "2016",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Sin nombre - óleo sobre tela  -  43 cm x 64cm año 2016.jpg",\n                type: "image",\n                title: "Sin nombre",\n                technique: "óleo sobre tela ",\n                dimensions: " 43 cm x 64cm año 2016",\n                year: "2016",\n                collection: ""\n            }', '{\n                path: "CATALOGO/ASÍ EN LA TIERRA COMO EN EL CIELO - óleo sobre tela - 110 cm x 120 cm - año 2015.JPG",\n                type: "image",\n                title: "ASÍ EN LA TIERRA COMO EN EL CIELO",\n                technique: "óleo sobre tela",\n                dimensions: "110 cm x 120 cm",\n                year: "2015",\n                collection: ""\n            }', '{\n                path: "CATALOGO/CACO MERLO - óleo sobre tela - año 2015 - colección privada.jpg",\n                type: "image",\n                title: "CACO MERLO",\n                technique: "óleo sobre tela",\n                dimensions: "",\n                year: "2015",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/Modelo - óleo sobre tela - 120 cm x 80 cm - año 2015.JPG",\n                type: "image",\n                title: "Modelo",\n                technique: "óleo sobre tela",\n                dimensions: "120 cm x 80 cm",\n                year: "2015",\n                collection: ""\n            }', '{\n                path: "CATALOGO/sin titulo - óleo sobre tela - 130 cm x100 cm - año 2015.jpg",\n                type: "image",\n                title: "sin titulo",\n                technique: "óleo sobre tela",\n                dimensions: "130 cm x100 cm",\n                year: "2015",\n                collection: ""\n            }', '{\n                path: "CATALOGO/CARA A CARA - óleo sobre tela  - 61 cm x 56 cm año 2014.jpg",\n                type: "image",\n                title: "CARA A CARA",\n                technique: "óleo sobre tela ",\n                dimensions: "61 cm x 56 cm año 2014",\n                year: "2014",\n                collection: ""\n            }', '{\n                path: "CATALOGO/EL TAMBOR - óleo sobre tela - 102 cm x 200 cm  - año 2014.jpg",\n                type: "image",\n                title: "EL TAMBOR",\n                technique: "óleo sobre tela",\n                dimensions: "102 cm x 200 cm ",\n                year: "2014",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Judith en el cuarto de Holofernes - óleo sobre tela -   120 cm x 210 cm    año 2014.jpg",\n                type: "image",\n                title: "Judith en el cuarto de Holofernes",\n                technique: "óleo sobre tela",\n                dimensions: "  120 cm x 210 cm    año 2014",\n                year: "2014",\n                collection: ""\n            }', '{\n                path: "CATALOGO/La permanencia de Artemisia - óleo sobre tela -   120cmx210cm año 2014.jpg",\n                type: "image",\n                title: "La permanencia de Artemisia",\n                technique: "óleo sobre tela",\n                dimensions: "  120cmx210cm año 2014",\n                year: "2014",\n                collection: ""\n            }', '{\n                path: "CATALOGO/LUNA DE MIEL EN BERGHOFF - óleo sobre tela - 96x60 - 2014 - colección privada.jpg",\n                type: "image",\n                title: "LUNA DE MIEL EN BERGHOFF",\n                technique: "óleo sobre tela",\n                dimensions: "",\n                year: "2014",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/Sin título - acrílico sobre lienzo - 100 cm x 120 cm - año  2014 - colección privada.JPG",\n                type: "image",\n                title: "Sin título",\n                technique: "acrílico sobre lienzo",\n                dimensions: "100 cm x 120 cm",\n                year: "2014",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/Sin título - óleo sobre tela - 70 cm x 50 cm - año 2014 - colección privada.JPG",\n                type: "image",\n                title: "Sin título",\n                technique: "óleo sobre tela",\n                dimensions: "70 cm x 50 cm",\n                year: "2014",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/De mis entretelas - óleo sobre tela -100cm x 200 cm - año 2013.jpg",\n                type: "image",\n                title: "De mis entretelas",\n                technique: "óleo sobre tela -100cm x 200 cm",\n                dimensions: "",\n                year: "2013",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Interior - óleo sobre tela - 50 cm x 80 cm  - año 2013 - colección privada.jpg",\n                type: "image",\n                title: "Interior",\n                technique: "óleo sobre tela",\n                dimensions: "50 cm x 80 cm ",\n                year: "2013",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/Mamá - óleo sobre tela - 50 cm x 80 cm - año 2013.jpg",\n                type: "image",\n                title: "Mamá",\n                technique: "óleo sobre tela",\n                dimensions: "50 cm x 80 cm",\n                year: "2013",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Tía Nena - óleo sobre tela - 50cm x 80 cm - año 2013 - colección privada.jpg",\n                type: "image",\n                title: "Tía Nena",\n                technique: "óleo sobre tela",\n                dimensions: "50cm x 80 cm",\n                year: "2013",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/BAILARINAS - óleo sobre MDF - 100 cm x 150 cm - año 2012 - colección privada.jpg",\n                type: "image",\n                title: "BAILARINAS",\n                technique: "óleo sobre MDF",\n                dimensions: "100 cm x 150 cm",\n                year: "2012",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/Origen y orgullo - óleo sobre MDF año 2012 - colección privada.jpg",\n                type: "image",\n                title: "Origen y orgullo",\n                technique: "óleo sobre MDF año 2012",\n                dimensions: "",\n                year: "2012",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/Origen y orgullo - óleo sobre tela - año 2012 - colección privada.jpg",\n                type: "image",\n                title: "Origen y orgullo",\n                technique: "óleo sobre tela",\n                dimensions: "",\n                year: "2012",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/Origen y orgullo 2 - óleo sobre MDF año 2012 - colección privada.jpg",\n                type: "image",\n                title: "Origen y orgullo 2",\n                technique: "óleo sobre MDF año 2012",\n                dimensions: "",\n                year: "2012",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/Origen y orgullo 3- óleo sobre MDF año 2012 - colección privada.jpg",\n                type: "image",\n                title: "Origen y orgullo 3- óleo sobre MDF año 2012",\n                technique: "",\n                dimensions: "",\n                year: "2012",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/Origen y orgullo 4 - óleo sobre MDF año 2012 - colección privada.jpg",\n                type: "image",\n                title: "Origen y orgullo 4",\n                technique: "óleo sobre MDF año 2012",\n                dimensions: "",\n                year: "2012",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/Origen y orgullo 5 - óleo sobre MDF año 2012 - colección privada.jpg",\n                type: "image",\n                title: "Origen y orgullo 5",\n                technique: "óleo sobre MDF año 2012",\n                dimensions: "",\n                year: "2012",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/Origen y orgullo 6 - óleo sobre MDF año 2012 - colección privada.jpg",\n                type: "image",\n                title: "Origen y orgullo 6",\n                technique: "óleo sobre MDF año 2012",\n                dimensions: "",\n                year: "2012",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/sin titulo - óleo sobre tela - año 2012.jpg",\n                type: "image",\n                title: "sin titulo",\n                technique: "óleo sobre tela",\n                dimensions: "",\n                year: "2012",\n                collection: ""\n            }', '{\n                path: "CATALOGO/Sin título - óleo sobre MDF - año 2012 - colección privada.jpg",\n                type: "image",\n                title: "Sin título",\n                technique: "óleo sobre MDF",\n                dimensions: "",\n                year: "2012",\n                collection: "Colección privada"\n            }', '{\n                path: "CATALOGO/SUBURBIO - óleo sobre mdf - 87 cm x 90 cm - año 2012.jpg",\n                type: "image",\n                title: "SUBURBIO",\n                technique: "óleo sobre mdf",\n                dimensions: "87 cm x 90 cm",\n                year: "2012",\n                collection: ""\n            }', '{\n                path: "CATALOGO/MUTA - 18cm x 24 cm.jpg",\n                type: "image",\n                title: "MUTA",\n                technique: "",\n                dimensions: "18cm x 24 cm",\n                year: "",\n                collection: ""\n            }'];
+        const certificateData = [];
+        
+        let currentPageIndex = 0;
+        const totalPages = 5;
+        
+        // Navegación por botones
+        function previousPage() {
+            if (currentPageIndex > 0) {
+                currentPageIndex--;
+                scrollToPage(currentPageIndex);
+            }
+        }
+        
+        function nextPage() {
+            if (currentPageIndex < totalPages - 1) {
+                currentPageIndex++;
+                scrollToPage(currentPageIndex);
+            }
+        }
+        
+        function scrollToPage(pageIndex) {
+            const container = document.getElementById('bookContainer');
+            const pageWidth = window.innerWidth;
+            container.scrollTo({
+                left: pageIndex * pageWidth,
+                behavior: 'smooth'
+            });
+            updatePageIndicator();
+        }
+        
+        function updatePageIndicator() {
+            const indicator = document.getElementById('pageIndicator');
+            indicator.textContent = `${currentPageIndex + 1} / ${totalPages}`;
+        }
+        
+        // Detectar scroll manual para actualizar indicador
+        function handleScroll() {
+            const container = document.getElementById('bookContainer');
+            const pageWidth = window.innerWidth;
+            const scrollLeft = container.scrollLeft;
+            const newPageIndex = Math.round(scrollLeft / pageWidth);
+            
+            if (newPageIndex !== currentPageIndex) {
+                currentPageIndex = newPageIndex;
+                updatePageIndicator();
+            }
+        }
+        
+        // Cargar obras dinámicamente
+        function loadCatalogo() {
+            const catalogoContainer = document.getElementById('catalogoObras');
+            if (!catalogoContainer || !catalogWorks.length) return;
+            
+            catalogWorks.forEach((obra, index) => {
+                const obraDiv = document.createElement('div');
+                obraDiv.className = 'obra-item';
+                obraDiv.innerHTML = `
+                    <img src="${obra.image || 'placeholder.jpg'}" alt="${obra.title || 'Obra'}" class="obra-img">
+                    <h4>${obra.title || 'Sin título'}</h4>
+                    <p>${obra.technique || ''}</p>
+                    <p>${obra.dimensions || ''}</p>
+                    <a href="https://wa.me/5492615988180?text=Me%20interesa%20la%20obra%20${obra.title}" class="contact-artist" target="_blank">💬</a>
+                `;
+                catalogoContainer.appendChild(obraDiv);
+            });
+        }
+        
+        // Cargar certificados dinámicamente
+        function loadCertificados() {
+            const certContainer = document.getElementById('certificados');
+            if (!certContainer || !certificateData.length) return;
+            
+            certificateData.forEach((cert, index) => {
+                const certDiv = document.createElement('div');
+                certDiv.className = 'obra-item';
+                certDiv.innerHTML = `
+                    <img src="${cert.image || 'placeholder.jpg'}" alt="${cert.title || 'Certificado'}" class="obra-img">
+                    <h4>${cert.title || 'Sin título'}</h4>
+                    <p>${cert.institution || ''}</p>
+                    <p>${cert.date || ''}</p>
+                `;
+                certContainer.appendChild(certDiv);
+            });
+        }
+        
+        // Inicializar cuando carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('bookContainer').addEventListener('scroll', handleScroll);
+            loadCatalogo();
+            loadCertificados();
+            updatePageIndicator();
+        });
+        
+        // Navegación por teclado
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') previousPage();
+            if (e.key === 'ArrowRight') nextPage();
+        });
+        
+    </script>
+</body>
+</html>

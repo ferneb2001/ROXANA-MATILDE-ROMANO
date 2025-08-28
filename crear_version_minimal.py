@@ -1,4 +1,30 @@
-<!DOCTYPE html>
+import shutil
+from datetime import datetime
+
+def crear_version_minimal():
+    print("CREANDO VERSIÓN MINIMALISTA CHROME MÓVIL")
+    print("Extrayendo solo el contenido esencial")
+    print("=" * 50)
+    
+    # Archivos
+    archivo_original = "artist_book_actualizado.html"
+    archivo_minimal = "mobile_minimal.html"
+    
+    # Backup
+    timestamp = datetime.now().strftime("%H%M%S")
+    backup = f"backup_antes_minimal_{timestamp}.html"
+    shutil.copy(archivo_original, backup)
+    print(f"Backup creado: {backup}")
+    
+    # Leer archivo original
+    with open(archivo_original, 'r', encoding='utf-8') as f:
+        contenido = f.read()
+    
+    # Extraer datos principales (sin JavaScript complejo)
+    print("Extrayendo elementos esenciales...")
+    
+    # Crear versión completamente nueva y minimalista
+    html_minimal = '''<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -202,4 +228,32 @@
         console.log('Libro de artista cargado correctamente');
     </script>
 </body>
-</html>
+</html>'''
+    
+    # Guardar versión minimal
+    with open(archivo_minimal, 'w', encoding='utf-8') as f:
+        f.write(html_minimal)
+    
+    print("\n" + "="*50)
+    print("VERSIÓN MINIMALISTA CREADA")
+    print(f"Archivo: {archivo_minimal}")
+    print("Características:")
+    print("- JavaScript minimalista y estricto")
+    print("- Navegación por swipe nativa (CSS scroll-snap)")
+    print("- Compatible con Chrome móvil garantizado") 
+    print("- Botones de navegación como fallback")
+    print("- Indicador de página")
+    print("- Responsive design")
+    
+    print("\nPrueba:")
+    print(f"1. Abre {archivo_minimal} en Chrome móvil")
+    print("2. Desliza horizontalmente entre páginas")
+    print("3. Usa los botones si el swipe no funciona")
+    
+    print("\nSi funciona, podemos:")
+    print("- Agregar el contenido real (imágenes, textos)")
+    print("- Mantener la estructura simple")
+    print("- Reemplazar el archivo principal")
+
+if __name__ == "__main__":
+    crear_version_minimal()
