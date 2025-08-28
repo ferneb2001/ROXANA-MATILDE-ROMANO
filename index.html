@@ -451,24 +451,29 @@
 </style>
         <script>
     // Funciones de navegacion del indice
-    
-
-    
-
-    
-
-    
-    
     function goToObras() {
         window.currentPageIndex = 5;
-        window.
+        window.updatePages();
+    }
+
+    function goToCertificados() {
+        var paginaCertificados = 5 + catalogWorks.length + 1;
+        window.currentPageIndex = paginaCertificados;
+        window.updatePages();
     }
 
     function goToEventos() {
-        window.currentPageIndex = 5;
-        window.
+        var paginaEventos = 5 + catalogWorks.length + 1 + certificateData.length + 1;
+        window.currentPageIndex = paginaEventos;
+        window.updatePages();
     }
-</script>
+
+    function goToAtelier() {
+        var paginaAtelier = 5 + catalogWorks.length + 1 + certificateData.length + 1 + 1 + 1;
+        window.currentPageIndex = paginaAtelier;
+        window.updatePages();
+    }
+    </script>
 </head>
 <body>
 
@@ -1667,31 +1672,120 @@
                 }
             }
 
-            nextBtn.addEventListener('click', () => { if (window.currentPageIndex < window.pages.length - 1) { window.currentPageIndex++;  } });
+            nextBtn.addEventListener('click', () => { if (window.currentPageIndex < window.pages.length - 1) { window.currentPageIndex++; updatePages(); } 
+            
+            // Funciones de navegacion del indice
+            function goToObras() {
+                currentPageIndex = 5; // Pagina 6 en 0-indexado
+                updatePages();
+            }
+            
+            function goToCertificados() {
+                var paginaCertificados = 5 + catalogWorks.length + 1;
+                currentPageIndex = paginaCertificados;
+                updatePages();
+            }
+            
+            function goToEventos() {
+                var paginaEventos = 5 + catalogWorks.length + 1 + certificateData.length + 1;
+                currentPageIndex = paginaEventos;
+                updatePages();
+            }
+            
+            function goToAtelier() {
+                var paginaAtelier = 5 + catalogWorks.length + 1 + certificateData.length + 2;
+                currentPageIndex = paginaAtelier;
+                updatePages();
+            }
+
+        // Funciones de navegacion del indice
+        function goToObras() {
+            currentPageIndex = 5;
+            updatePages();
+        }
+        
+        function goToCertificados() {
+            var paginaCertificados = 5 + catalogWorks.length + 1;
+            currentPageIndex = paginaCertificados;
+            updatePages();
+        }
+        
+        function goToEventos() {
+            var paginaEventos = 5 + catalogWorks.length + 1 + certificateData.length + 1;
+            currentPageIndex = paginaEventos;
+            updatePages();
+        }
+        
+        function goToAtelier() {
+            var paginaAtelier = 5 + catalogWorks.length + 1 + certificateData.length + 2;
+            currentPageIndex = paginaAtelier;
+            updatePages();
+        }
+        
+        });
+            prevBtn.addEventListener('click', () => { if (window.currentPageIndex > 0) { window.currentPageIndex--; updatePages(); } });
 
             updatePages();
         
         // Funciones de navegación para el índice
+        function goToObras() {
+            // Página 6 es donde empieza "OBRAS"
+            currentPageIndex = 5; // 0-indexado, así que página 6 = índice 5
+            updatePages();
+        }
         
+        function goToCertificados() {
+            // Calcular: página 6 (OBRAS) + todas las obras + página "CERTIFICADOS" 
+            const paginaCertificados = 6 + catalogWorks.length;
+            currentPageIndex = paginaCertificados - 1;
+            updatePages();
+        }
         
+        function goToEventos() {
+            // Calcular: OBRAS + obras + CERTIFICADOS + certificados + página "Próximos Eventos"
+            const paginaEventos = 6 + catalogWorks.length + 1 + certificateData.length;
+            currentPageIndex = paginaEventos - 1;
+            updatePages();
+        }
         
+        function goToAtelier() {
+            // Calcular: todo lo anterior + página de eventos + página "Clases de Atelier"
+            const paginaAtelier = 6 + catalogWorks.length + 1 + certificateData.length + 1 + 1;
+            currentPageIndex = paginaAtelier - 1;
+            updatePages();
+
+        // Funciones de navegación para el índice
+        function goToObras() {
+            currentPageIndex = 5; // Página 6 en 0-indexado
+            updatePages();
+        }
         
+        function goToCertificados() {
+            // Ir a donde empiezan los certificados
+            const paginaCertificados = 5 + catalogWorks.length + 1;
+            currentPageIndex = paginaCertificados;
+            updatePages();
+        }
         
+        function goToEventos() {
+            // Ir a próximos eventos
+            const paginaEventos = 5 + catalogWorks.length + 1 + certificateData.length + 1;
+            currentPageIndex = paginaEventos;
+            updatePages();
+        }
         
-        
+        function goToAtelier() {
+            // Ir a clases de atelier
+            const paginaAtelier = 5 + catalogWorks.length + 1 + certificateData.length + 2;
+            currentPageIndex = paginaAtelier;
+            updatePages();
+        }
         }
 
         
         
         
         });
-    
-updatePages();
-    }
-
-    function goToCertificados() {
-        window.currentPageIndex = 5;
-        window.updatePages();
-</script>
+    </script>
 </body>
 </html>
