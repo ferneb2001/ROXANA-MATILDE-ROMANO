@@ -53,7 +53,55 @@
         .page4 { background: linear-gradient(135deg, #e67e22 0%, #f39c12 100%); }
         .page5 { background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%); }
         .page6 { background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%); }
-        .page7 { background: linear-gradient(135deg, #7f8c8d 0%, #95a5a6 100%); }
+                .page8 { background: linear-gradient(135deg, #7f8c8d 0%, #95a5a6 100%); }
+        .page9 { background: linear-gradient(135deg, #16a085 0%, #27ae60 100%); }
+        
+        /* Grid de Fotos Atelier */
+        .atelier-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .atelier-photo {
+            position: relative;
+            aspect-ratio: 4/3;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .atelier-photo:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+        
+        .atelier-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .atelier-photo:hover img {
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 768px) {
+            .atelier-gallery {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                padding: 15px;
+            }
+            .atelier-photo {
+                aspect-ratio: 1/1;
+            }
+        }
         
         .profile-photo {
             width: 180px;
@@ -277,17 +325,11 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.7);
             color: white;
-            padding: 8px 15px;
+            padding: 5px 10px;
             border-radius: 15px;
-            z-index: 10000;
-            font-size: 14px;
-            font-weight: bold;
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-            min-width: 50px;
-            text-align: center;
+            z-index: 1000;
         }
         
         .lightbox {
@@ -363,46 +405,59 @@
             padding: 2px;
         }
         
-    
-        /* Galería pequeña para página 8 */
-        .signature-centered {
-            text-align: center;
-            margin: 20px 0;
-            font-weight: bold;
-        }
+            .page8 { background: linear-gradient(135deg, #7f8c8d 0%, #95a5a6 100%); }
+        .page9 { background: linear-gradient(135deg, #16a085 0%, #27ae60 100%); }
         
-        .atelier-gallery-small {
+        /* Grid de Fotos Atelier */
+        .atelier-gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 12px;
-            padding: 20px 0;
-            max-width: 800px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         
-        .atelier-photo-small {
+        .atelier-photo {
+            position: relative;
             aspect-ratio: 4/3;
-            border-radius: 8px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
-        .atelier-photo-small:hover {
-            transform: translateY(-3px);
+        .atelier-photo:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
         }
         
-        .atelier-photo-small img {
+        .atelier-photo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .atelier-photo:hover img {
+            transform: scale(1.05);
+        }
+        
+        .signature-centered {
+            text-align: center;
+            margin: 25px 0;
+            font-weight: bold;
         }
         
         @media (max-width: 768px) {
-            .atelier-gallery-small {
+            .atelier-gallery {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
+                gap: 15px;
+                padding: 15px;
+            }
+            .atelier-photo {
+                aspect-ratio: 1/1;
             }
         }
     </style>
@@ -414,7 +469,7 @@
                 <img src="FOTO RO.jpg" alt="Roxana Matilde Romano" class="profile-photo">
                 <div class="content">
                     <h1>ROXANA MATILDE ROMANO</h1>
-                    <p class="subtitle">Artista Plástica</p>
+                    <p class="subtitle">Artista Visual</p>
                     
                     <div class="contact-info">
                         <div class="contact-item">
@@ -482,6 +537,8 @@
                     <button onclick="goToPage(6)" class="index-button">CERTIFICADOS</button>
                     <button onclick="goToPage(7)" class="index-button">PRÓXIMOS EVENTOS</button>
                     <button onclick="goToPage(8)" class="index-button">CLASES</button>
+                    <button onclick="goToPage(9)" class="index-button">GALERÍA ATELIER</button>
+                    
                 </div>
             </div>
         </div>
@@ -529,39 +586,10 @@
                     <p>Descubre tu potencial y nutre tu talento en un entorno estimulante y acogedor.</p>
                     <p>Estás invitado para que juntos exploremos tu propia abstracción artística.</p>
                     <p class="signature-centered"><strong>ROXANA MATILDE ROMANO</strong></p>
-                    
-                    <!-- Separador visual -->
-                    <div style="height: 30px;"></div>
-                    
-                    <!-- Galería del Atelier -->
-                    <div class="atelier-gallery-small">
-                        <div class="atelier-photo-small" onclick="openLightbox('fotos atelier/ATELIER.jpg', 'Vista del Atelier')">
-                            <img src="fotos atelier/ATELIER.jpg" alt="Vista del Atelier" loading="lazy">
-                        </div>
-                        <div class="atelier-photo-small" onclick="openLightbox('fotos atelier/IMG-20250822-WA0022.jpg', 'Espacio de trabajo')">
-                            <img src="fotos atelier/IMG-20250822-WA0022.jpg" alt="Espacio de trabajo" loading="lazy">
-                        </div>
-                        <div class="atelier-photo-small" onclick="openLightbox('fotos atelier/Imagen de WhatsApp 2025-08-26 a las 09.59.49_0c37599c.jpg', 'Ambiente del Atelier')">
-                            <img src="fotos atelier/Imagen de WhatsApp 2025-08-26 a las 09.59.49_0c37599c.jpg" alt="Ambiente del Atelier" loading="lazy">
-                        </div>
-                        <div class="atelier-photo-small" onclick="openLightbox('fotos atelier/atelier1.jpg', 'Rincón creativo')">
-                            <img src="fotos atelier/atelier1.jpg" alt="Rincón creativo" loading="lazy">
-                        </div>
-                        <div class="atelier-photo-small" onclick="openLightbox('fotos atelier/atelier2.jpg', 'Mesa de trabajo')">
-                            <img src="fotos atelier/atelier2.jpg" alt="Mesa de trabajo" loading="lazy">
-                        </div>
-                        <div class="atelier-photo-small" onclick="openLightbox('fotos atelier/atelier3.jpg', 'Área de pintura')">
-                            <img src="fotos atelier/atelier3.jpg" alt="Área de pintura" loading="lazy">
-                        </div>
-                        <div class="atelier-photo-small" onclick="openLightbox('fotos atelier/foto taller.jpg', 'Taller completo')">
-                            <img src="fotos atelier/foto taller.jpg" alt="Taller completo" loading="lazy">
-                        </div>
-                        <div class="atelier-photo-small" onclick="openLightbox('fotos atelier/frente atelier.jpg', 'Frente del Atelier')">
-                            <img src="fotos atelier/frente atelier.jpg" alt="Frente del Atelier" loading="lazy">
-                        </div>
-                    </div>
                 </div>
             </div>
+            </div>
+        </div>
         </div>
         </div>
         
@@ -1288,7 +1316,7 @@
         ];
         
         let currentPageIndex = 0;
-        const totalPages = 8;
+        const totalPages = 9;
         
         function previousPage() {
             if (currentPageIndex > 0) {
@@ -1416,5 +1444,39 @@
         });
         
     </script>
-</body>
+
+        <!-- Página 9: Galería Atelier -->
+        <div class="page page9">
+            <div class="content">
+                <h2>Galería del Atelier</h2>
+                <div class="atelier-gallery">
+                    <div class="atelier-photo" onclick="openLightbox('fotos atelier/ATELIER.jpg', 'Vista del Atelier')">
+                        <img src="fotos atelier/ATELIER.jpg" alt="Vista del Atelier" loading="lazy">
+                    </div>
+                    <div class="atelier-photo" onclick="openLightbox('fotos atelier/IMG-20250822-WA0022.jpg', 'Espacio de trabajo')">
+                        <img src="fotos atelier/IMG-20250822-WA0022.jpg" alt="Espacio de trabajo" loading="lazy">
+                    </div>
+                    <div class="atelier-photo" onclick="openLightbox('fotos atelier/Imagen de WhatsApp 2025-08-26 a las 09.59.49_0c37599c.jpg', 'Ambiente del Atelier')">
+                        <img src="fotos atelier/Imagen de WhatsApp 2025-08-26 a las 09.59.49_0c37599c.jpg" alt="Ambiente del Atelier" loading="lazy">
+                    </div>
+                    <div class="atelier-photo" onclick="openLightbox('fotos atelier/atelier1.jpg', 'Rincón creativo')">
+                        <img src="fotos atelier/atelier1.jpg" alt="Rincón creativo" loading="lazy">
+                    </div>
+                    <div class="atelier-photo" onclick="openLightbox('fotos atelier/atelier2.jpg', 'Mesa de trabajo')">
+                        <img src="fotos atelier/atelier2.jpg" alt="Mesa de trabajo" loading="lazy">
+                    </div>
+                    <div class="atelier-photo" onclick="openLightbox('fotos atelier/atelier3.jpg', 'Área de pintura')">
+                        <img src="fotos atelier/atelier3.jpg" alt="Área de pintura" loading="lazy">
+                    </div>
+                    <div class="atelier-photo" onclick="openLightbox('fotos atelier/foto taller.jpg', 'Taller completo')">
+                        <img src="fotos atelier/foto taller.jpg" alt="Taller completo" loading="lazy">
+                    </div>
+                    <div class="atelier-photo" onclick="openLightbox('fotos atelier/frente atelier.jpg', 'Frente del Atelier')">
+                        <img src="fotos atelier/frente atelier.jpg" alt="Frente del Atelier" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </body>
 </html>

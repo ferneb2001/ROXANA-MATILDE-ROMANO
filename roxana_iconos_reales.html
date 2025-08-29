@@ -277,17 +277,11 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.7);
             color: white;
-            padding: 8px 15px;
+            padding: 5px 10px;
             border-radius: 15px;
-            z-index: 10000;
-            font-size: 14px;
-            font-weight: bold;
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-            min-width: 50px;
-            text-align: center;
+            z-index: 1000;
         }
         
         .lightbox {
@@ -363,48 +357,6 @@
             padding: 2px;
         }
         
-    
-        /* Galería pequeña para página 8 */
-        .signature-centered {
-            text-align: center;
-            margin: 20px 0;
-            font-weight: bold;
-        }
-        
-        .atelier-gallery-small {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 12px;
-            padding: 20px 0;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .atelier-photo-small {
-            aspect-ratio: 4/3;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        
-        .atelier-photo-small:hover {
-            transform: translateY(-3px);
-        }
-        
-        .atelier-photo-small img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        @media (max-width: 768px) {
-            .atelier-gallery-small {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -414,7 +366,7 @@
                 <img src="FOTO RO.jpg" alt="Roxana Matilde Romano" class="profile-photo">
                 <div class="content">
                     <h1>ROXANA MATILDE ROMANO</h1>
-                    <p class="subtitle">Artista Plástica</p>
+                    <p class="subtitle">Artista Visual</p>
                     
                     <div class="contact-info">
                         <div class="contact-item">
@@ -528,38 +480,7 @@
                     <p>Ya seas un principiante curioso o un creador experimentado, aquí encontrarás un espacio inspirador y pacífico.</p>
                     <p>Descubre tu potencial y nutre tu talento en un entorno estimulante y acogedor.</p>
                     <p>Estás invitado para que juntos exploremos tu propia abstracción artística.</p>
-                    <p class="signature-centered"><strong>ROXANA MATILDE ROMANO</strong></p>
-                    
-                    <!-- Separador visual -->
-                    <div style="height: 30px;"></div>
-                    
-                    <!-- Galería del Atelier -->
-                    <div class="atelier-gallery-small">
-                        <div class="atelier-photo-small" onclick="openLightbox('fotos atelier/ATELIER.jpg', 'Vista del Atelier')">
-                            <img src="fotos atelier/ATELIER.jpg" alt="Vista del Atelier" loading="lazy">
-                        </div>
-                        <div class="atelier-photo-small" onclick="openLightbox('fotos atelier/IMG-20250822-WA0022.jpg', 'Espacio de trabajo')">
-                            <img src="fotos atelier/IMG-20250822-WA0022.jpg" alt="Espacio de trabajo" loading="lazy">
-                        </div>
-                        <div class="atelier-photo-small" onclick="openLightbox('fotos atelier/Imagen de WhatsApp 2025-08-26 a las 09.59.49_0c37599c.jpg', 'Ambiente del Atelier')">
-                            <img src="fotos atelier/Imagen de WhatsApp 2025-08-26 a las 09.59.49_0c37599c.jpg" alt="Ambiente del Atelier" loading="lazy">
-                        </div>
-                        <div class="atelier-photo-small" onclick="openLightbox('fotos atelier/atelier1.jpg', 'Rincón creativo')">
-                            <img src="fotos atelier/atelier1.jpg" alt="Rincón creativo" loading="lazy">
-                        </div>
-                        <div class="atelier-photo-small" onclick="openLightbox('fotos atelier/atelier2.jpg', 'Mesa de trabajo')">
-                            <img src="fotos atelier/atelier2.jpg" alt="Mesa de trabajo" loading="lazy">
-                        </div>
-                        <div class="atelier-photo-small" onclick="openLightbox('fotos atelier/atelier3.jpg', 'Área de pintura')">
-                            <img src="fotos atelier/atelier3.jpg" alt="Área de pintura" loading="lazy">
-                        </div>
-                        <div class="atelier-photo-small" onclick="openLightbox('fotos atelier/foto taller.jpg', 'Taller completo')">
-                            <img src="fotos atelier/foto taller.jpg" alt="Taller completo" loading="lazy">
-                        </div>
-                        <div class="atelier-photo-small" onclick="openLightbox('fotos atelier/frente atelier.jpg', 'Frente del Atelier')">
-                            <img src="fotos atelier/frente atelier.jpg" alt="Frente del Atelier" loading="lazy">
-                        </div>
-                    </div>
+                    <p><strong>ROXANA MATILDE ROMANO</strong></p>
                 </div>
             </div>
         </div>
