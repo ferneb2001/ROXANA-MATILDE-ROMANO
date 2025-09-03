@@ -116,4 +116,31 @@
 
 ---
 
+## 🚀 PROTOCOLO DE SUBIDA A GITHUB - SITIO WEB ROXANA ROMANO
+
+### 📋 COMANDOS ESTÁNDAR PARA SUBIR CAMBIOS:
+**Cuando Fernando pida "subirlo" o "subir a GitHub", ejecutar automáticamente:**
+
+```bash
+git add .
+git commit -m "[DESCRIPCIÓN PERSONALIZADA DE LOS CAMBIOS REALIZADOS]"
+git push origin main
+```
+
+### 📝 DIRECTRICES PARA MENSAJES DE COMMIT:
+- **Ser específico** sobre los cambios realizados
+- **Incluir las funcionalidades principales** modificadas
+- **Mencionar nuevas obras/certificados** agregados si aplica
+- **Indicar mejoras responsive/móvil** si se aplicaron
+
+### ⏰ TIEMPO DE DESPLIEGUE:
+- **2-3 minutos** para que los cambios aparezcan en el sitio web público
+- **Confirmar** siempre el éxito de la subida
+- **Documentar** el ID del commit generado
+
+### 🎯 OBJETIVO:
+Mantener el sitio web de Roxana Romano actualizado en GitHub Pages con historial completo de cambios para posibles rollbacks.
+
+---
+
 *Estas máximas son la base filosófica y metodológica para el desarrollo de todos los proyectos de Fernando Adrian Nebro. Deben ser aplicadas consistentemente y sin excepción.*

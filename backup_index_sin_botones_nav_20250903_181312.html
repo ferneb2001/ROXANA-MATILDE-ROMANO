@@ -261,6 +261,31 @@
             text-align: justify;
         }
         
+        .nav-buttons {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            padding: 5px 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: background 0.3s;
+        }
+        
+        
+        .nav-btn:hover {
+            background: rgba(0,0,0,0.9);
+        }
         
         .page-indicator {
             position: fixed;
@@ -598,6 +623,12 @@
                 max-width: 150px;
             }
             
+            /* Botones de navegación más pequeños en móvil */
+            .nav-btn {
+                padding: 6px 12px !important;
+                font-size: 12px !important;
+                border-radius: 15px !important;
+            }
         }
     </style>
 </head>
@@ -898,6 +929,11 @@
         
     </div>
     
+    <!-- Navegación -->
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="previousPage()">← Anterior</button>
+        <button class="nav-btn" onclick="nextPage()">Siguiente →</button>
+    </div>
     
     <div class="page-indicator" id="pageIndicator">1 / 8</div>
     
