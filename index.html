@@ -1838,5 +1838,299 @@
         });
         
     </script>
+
+    <!-- ============================================================
+         AGENTE IA - ROXANA ROMANO
+    ============================================================ -->
+    <style>
+        #chat-btn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: #8b7355;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.28);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: background 0.2s, transform 0.2s;
+        }
+        #chat-btn:hover { background: #a08660; transform: scale(1.07); }
+        #chat-btn svg { width: 26px; height: 26px; fill: #fff; }
+
+        #chat-window {
+            position: fixed;
+            bottom: 98px;
+            right: 28px;
+            width: 350px;
+            height: 500px;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.22);
+            display: flex;
+            flex-direction: column;
+            z-index: 9998;
+            overflow: hidden;
+            transform: scale(0.85) translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.25s cubic-bezier(.4,0,.2,1), opacity 0.25s;
+        }
+        #chat-window.open {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        #chat-header {
+            background: #2c2c2c;
+            color: #fff;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+        #chat-header-info { display: flex; align-items: center; gap: 10px; }
+        #chat-avatar {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: #8b7355;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px; color: #fff; font-weight: bold;
+        }
+        #chat-header-text { display: flex; flex-direction: column; }
+        #chat-header-name { font-size: 14px; font-weight: 600; letter-spacing: 0.3px; }
+        #chat-header-sub { font-size: 11px; color: #aaa; margin-top: 1px; }
+        #chat-close {
+            background: none; border: none; color: #aaa;
+            cursor: pointer; font-size: 20px; line-height: 1;
+            padding: 2px 6px; border-radius: 6px;
+            transition: color 0.15s;
+        }
+        #chat-close:hover { color: #fff; }
+
+        #chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #f8f9fa;
+        }
+        #chat-messages::-webkit-scrollbar { width: 4px; }
+        #chat-messages::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+
+        .chat-msg {
+            max-width: 82%;
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 13.5px;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+        .chat-msg.bot {
+            background: #fff;
+            color: #2c2c2c;
+            border-bottom-left-radius: 4px;
+            align-self: flex-start;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+        .chat-msg.user {
+            background: #8b7355;
+            color: #fff;
+            border-bottom-right-radius: 4px;
+            align-self: flex-end;
+        }
+        .chat-msg.typing {
+            background: #fff;
+            color: #999;
+            align-self: flex-start;
+            font-style: italic;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        #chat-input-area {
+            display: flex;
+            align-items: center;
+            padding: 12px 14px;
+            gap: 8px;
+            background: #fff;
+            border-top: 1px solid #eee;
+            flex-shrink: 0;
+        }
+        #chat-input {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 22px;
+            padding: 9px 14px;
+            font-size: 13.5px;
+            outline: none;
+            font-family: inherit;
+            background: #f8f9fa;
+            transition: border-color 0.2s;
+        }
+        #chat-input:focus { border-color: #8b7355; background: #fff; }
+        #chat-send {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            background: #8b7355;
+            border: none;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            transition: background 0.2s;
+        }
+        #chat-send:hover { background: #a08660; }
+        #chat-send svg { width: 17px; height: 17px; fill: #fff; }
+
+        @media (max-width: 480px) {
+            #chat-window {
+                width: calc(100vw - 24px);
+                right: 12px;
+                bottom: 88px;
+                height: 420px;
+            }
+            #chat-btn { bottom: 20px; right: 16px; }
+        }
+    </style>
+
+    <!-- Botón flotante -->
+    <button id="chat-btn" onclick="toggleChat()" title="Consultas sobre las obras y clases">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 10H6v-2h12v2zm0-3H6V7h12v2z"/>
+        </svg>
+    </button>
+
+    <!-- Ventana de chat -->
+    <div id="chat-window">
+        <div id="chat-header">
+            <div id="chat-header-info">
+                <div id="chat-avatar">R</div>
+                <div id="chat-header-text">
+                    <span id="chat-header-name">Roxana Romano</span>
+                    <span id="chat-header-sub">Artista Visual · Mendoza</span>
+                </div>
+            </div>
+            <button id="chat-close" onclick="toggleChat()">✕</button>
+        </div>
+        <div id="chat-messages"></div>
+        <div id="chat-input-area">
+            <input id="chat-input" type="text" placeholder="Escribí tu consulta..." autocomplete="off"
+                onkeydown="if(event.key==='Enter') sendMessage()">
+            <button id="chat-send" onclick="sendMessage()">
+                <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const GEMINI_KEY = 'AIzaSyB87X2ifXLYZuinM-wYulXzuoYxjrLh0j0';
+        const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+
+        const SYSTEM_PROMPT = `Sos el asistente virtual de Roxana Matilde Romano, artista visual de Mendoza, Argentina. Tu rol es representarla con elegancia, calidez y profesionalismo ante potenciales compradores, estudiantes y visitantes de todo el mundo.
+
+SOBRE ROXANA:
+- Artista visual mendocina con más de una década de trayectoria
+- Nació en 1969 en Mendoza, Argentina
+- Especializada en óleo sobre tela. También trabaja con acrílico y carbonilla
+- 1er Premio Salón de Pintura Pequeño Formato - Rostros Universales 2014
+- Diplomatura en Arteterapia Profesional
+- Más de 115 obras catalogadas, muchas en colecciones privadas
+
+SU OBRA:
+- Retratos, figuras humanas, naturalezas muertas, animales, composiciones abstractas y poéticas
+- Serie "Observadores" (2025): CABRA, GALLO, PALOMA, RATA, Zoom — pequeño formato expresivo
+- Obras grandes: PANOPTICO 140x200cm, MEMO 99x180cm, BAILARINAS 100x150cm, EL TAMBOR 102x200cm
+- Obras recientes (2023-2025): Recolectores, Vaca, Cielo, DESCANSO, La paradoja del observador
+- Técnica principal: óleo sobre tela con gran dominio del color y la materia
+
+ATELIER Y CLASES:
+- Atelier propio en Las Heras, Mendoza
+- Dirección: Manuel A. Sáez 2101, Las Heras, Mendoza
+- Da clases de pintura: individuales y grupales
+- Abre su taller a visitas — experiencia llamada "Arte en Crudo"
+- Ideal para turistas y amantes del arte que visiten Mendoza
+
+CONTACTO:
+- WhatsApp: +5492615988180
+- Instagram: @roxana.matilde.romano
+- Email: roxanamatilderomano@gmail.com
+- Sitio web: https://ferneb2001.github.io/ROXANA-MATILDE-ROMANO/
+
+INSTRUCCIONES:
+- Respondé en el idioma que use el visitante: español, inglés o portugués
+- Sé cálido, elegante, entusiasta del arte de Roxana
+- Para precios de obras y disponibilidad: derivá siempre al WhatsApp o email
+- Para visitar el atelier: mencioná la dirección y sugerí contactar por WhatsApp primero
+- No inventes información que no tenés — derivá al contacto directo
+- Promové la trayectoria, los premios y el valor artístico de Roxana
+- Respuestas concisas: máximo 3-4 oraciones salvo que necesiten más detalle`;
+
+        let chatHistory = [];
+        let chatOpen = false;
+        let greeted = false;
+
+        function toggleChat() {
+            chatOpen = !chatOpen;
+            document.getElementById('chat-window').classList.toggle('open', chatOpen);
+            if (chatOpen && !greeted) {
+                greeted = true;
+                setTimeout(() => addMessage('bot', '¡Hola! Soy el asistente de Roxana Romano. Podés consultarme sobre sus obras, clases en el Atelier o visitas. ¿En qué te puedo ayudar?'), 300);
+            }
+            if (chatOpen) {
+                setTimeout(() => document.getElementById('chat-input').focus(), 350);
+            }
+        }
+
+        function addMessage(role, text) {
+            const msgs = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = `chat-msg ${role}`;
+            div.textContent = text;
+            msgs.appendChild(div);
+            msgs.scrollTop = msgs.scrollHeight;
+            return div;
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            input.value = '';
+            addMessage('user', text);
+            chatHistory.push({ role: 'user', parts: [{ text }] });
+
+            const typing = addMessage('typing', 'Escribiendo...');
+
+            try {
+                const res = await fetch(GEMINI_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+                        contents: chatHistory
+                    })
+                });
+                const data = await res.json();
+                typing.remove();
+
+                const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text
+                    || 'Disculpá, hubo un error. Podés contactar a Roxana directamente por WhatsApp: +5492615988180';
+
+                chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+                addMessage('bot', reply);
+            } catch (e) {
+                typing.remove();
+                addMessage('bot', 'Error de conexión. Contactá a Roxana por WhatsApp: +5492615988180');
+            }
+        }
+    </script>
 </body>
 </html>
