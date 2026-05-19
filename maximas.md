@@ -143,4 +143,65 @@ Mantener el sitio web de Roxana Romano actualizado en GitHub Pages con historial
 
 ---
 
+## 🎨 PROYECTO ESPECÍFICO - SITIO WEB ROXANA ROMANO
+
+### 📂 ESTRUCTURA CRÍTICA DEL PROYECTO:
+```
+ROXANA MATILDE ROMANO/
+├── index.html (ARCHIVO PRINCIPAL - NUNCA ELIMINAR)
+├── CATALOGO/ (115+ obras cronológicas)
+├── CERTIFICADOS/ (11 certificados, prioritarios primero) 
+├── maximas.md (ESTE ARCHIVO)
+├── DOCUMENTACION_PROYECTO_ROXANA_ROMANO.md
+└── backup_index_*.html (BACKUPS AUTOMÁTICOS)
+```
+
+### 🔧 PROCEDIMIENTOS ESPECÍFICOS:
+
+#### **AGREGAR OBRA NUEVA:**
+1. **BACKUP OBLIGATORIO** antes de editar
+2. Subir imagen a `CATALOGO/` con formato: `Título - técnica - dimensiones - año.jpg`
+3. Editar array `catalogWorks` en `index.html` 
+4. **UBICACIÓN CRONOLÓGICA:** Más recientes primero
+5. Aplicar protocolo GitHub de subida
+
+#### **MODIFICAR DISEÑO:**
+1. **NUNCA tocar:** Arrays de datos, funciones de navegación
+2. **SIEMPRE conservar:** Estructura 8 páginas, responsive design
+3. **VERIFICAR EN:** Desktop Y móviles antes de subir
+
+#### **COLORES Y ESTILOS ESTABLECIDOS:**
+- Fondo obras: `#f8f9fa` (gris neutro)
+- Iconos: `#8b7355` (gris cálido)
+- Hover: `#a08660` (gris cálido claro)
+- **NO CAMBIAR sin consultar documentación completa**
+
+### 🚨 ELEMENTOS INTOCABLES:
+- **8 páginas existentes** y su numeración
+- **Navegación táctil/scroll** (SIN botones anterior/siguiente)
+- **Arrays JavaScript:** `catalogWorks`, `certificateData`  
+- **Página 7 trilingüe** (ES/EN/PT)
+- **Sistema de backups automático**
+
+### 📋 COMANDOS CRÍTICOS:
+```bash
+# Subida estándar
+git add .
+git commit -m "Descripción específica de cambios"
+git push origin main
+
+# Rollback de emergencia  
+cp backup_index_[MAS_RECIENTE].html index.html
+git add index.html && git commit -m "Rollback a versión estable" && git push origin main
+```
+
+### 🎯 URL LIVE DEL SITIO:
+**https://ferneb2001.github.io/ROXANA-MATILDE-ROMANO/**
+- Tiempo despliegue: 2-3 minutos
+- Verificar siempre después de subir cambios
+
+---
+
 *Estas máximas son la base filosófica y metodológica para el desarrollo de todos los proyectos de Fernando Adrian Nebro. Deben ser aplicadas consistentemente y sin excepción.*
+
+*🎨 Proyecto Roxana Romano completado exitosamente aplicando metodología de verificación integral - Septiembre 2025*
