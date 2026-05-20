@@ -216,8 +216,68 @@ Datos estructurados que le dicen a Google exactamente que es una artista visual:
 - Git Credential Manager configurado para que los pushes funcionen sin pedir contraseña cada vez
 - URL del repositorio actualizada a: `https://github.com/ferneb2001/ROXANA-MATILDE-ROMANO.git`
 
-### **PENDIENTE:**
-- Foto horizontal (1200x630 px) para la imagen de preview en redes sociales
+### **COMPLETADO Mayo 2026:**
+- ✅ Imagen de preview: `CATALOGO/Sin título - óleo sobre tela - 170 cm x 100 cm - año 2023.jpg`
+- ✅ og:image:width 1200 / og:image:height 706 agregados
+- ✅ "Artista plástica" → "Artista Visual" en og:description y twitter:description
+
+---
+
+## 🤖 AGENTE IA — CHATBOT GEMINI (Mayo 2026)
+
+### **ARQUITECTURA:**
+El chatbot usa **Cloudflare Workers como proxy** para proteger la API key.
+
+```
+Visitante → index.html → Cloudflare Worker → Gemini API
+```
+
+La API key NUNCA está en el código HTML — está guardada como secreto en Cloudflare.
+
+### **CLOUDFLARE WORKER:**
+- **Nombre:** roxana-gemini-proxy
+- **URL:** https://roxana-gemini-proxy.ferneb2001.workers.dev
+- **Panel:** dash.cloudflare.com → Workers & Pages → roxana-gemini-proxy
+- **Variable secreta:** `GEMINI_API_KEY` (guardada en Ajustes → Variables y secretos)
+- **Modelo:** gemini-2.5-flash
+- **CORS permitido:** https://ferneb2001.github.io
+
+### **POR QUÉ CLOUDFLARE Y NO API KEY DIRECTA:**
+GitHub escanea automáticamente todos los repositorios públicos y reporta las API keys a Google, que las bloquea. Con el proxy de Cloudflare la key nunca aparece en el código.
+
+### **PROYECTO GEMINI:**
+- **Nombre:** ROXANA ROMANO ARTISTA VISUAL
+- **Panel:** aistudio.google.com → Claves de API
+- **Si la key falla:** crear nueva en aistudio.google.com y actualizarla en Cloudflare (Ajustes → Variables y secretos) — NO en el HTML
+
+### **CHATBOT EN EL SITIO:**
+- Botón flotante color #8b7355, esquina inferior derecha
+- Conoce obras, series, técnicas, premios, clases, Atelier, contacto
+- Responde en español, inglés o portugués
+- Deriva precios y disponibilidad al WhatsApp: +5492615988180
+
+---
+
+## 🌍 POSICIONAMIENTO WEB (Mayo 2026)
+
+### **GOOGLE BUSINESS PROFILE:**
+- **Estado:** Activo y verificado
+- **Nombre:** Roxana Matilde Romano — Artista Visual
+- **Dirección:** Manuel A. Sáez 2101, Las Heras, Mendoza
+- **Categoría:** Galería de arte / Academia de arte
+- **Fotos:** Subidas (Atelier, obras, Roxana pintando)
+- **WhatsApp chat:** https://wa.me/5492615988180
+- **Panel:** business.google.com (cuenta de Roxana)
+
+### **GOOGLE SEARCH CONSOLE:**
+- **Estado:** Verificado e indexación solicitada
+- **Método de verificación:** Etiqueta HTML en index.html
+- **Meta tag:** `<meta name="google-site-verification" content="iOwEnc2F5fDV1Att-XWbp8MwDOb-OIi9UcqdO1Ov_co">`
+- **Panel:** search.google.com/search-console (cuenta de Roxana)
+- **Sitio en Google:** Aparece como primer resultado al buscar "Roxana Matilde Romano Artista Visual"
+
+### **INSTAGRAM:**
+- Link del sitio agregado en la bio del perfil
 
 ---
 

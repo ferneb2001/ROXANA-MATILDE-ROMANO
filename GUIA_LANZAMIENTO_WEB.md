@@ -58,20 +58,90 @@ En el `<head>` del `index.html` agregar:
 
 ## PASO 2 — AGENTE IA CON GEMINI
 
-### Obtener API key gratuita
+### ⚠️ IMPORTANTE: NO poner la API key directo en el HTML
+Si el repositorio es público (GitHub Pages, Netlify), GitHub escanea el código y reporta la key a Google, que la bloquea automáticamente. La solución es usar **Cloudflare Workers como proxy**.
+
+---
+
+### 2a. Crear el proxy en Cloudflare Workers (OBLIGATORIO para repos públicos)
+
+**Cloudflare Workers es gratuito** (100.000 requests/día).
+
+**Pasos:**
+1. Crear cuenta en **cloudflare.com**
+2. Ir a **Workers & Pages** → **Crear aplicación** → **¡Comienza con Hola Mundo!**
+3. Nombrar el worker: `[proyecto]-gemini-proxy`
+4. Hacer clic en **Deploy**
+5. Ir a **Editar código**, seleccionar todo (Ctrl+A) y reemplazar con:
+
+```javascript
+export default {
+  async fetch(request, env) {
+    if (request.method === 'OPTIONS') {
+      return new Response(null, {
+        headers: {
+          'Access-Control-Allow-Origin': 'https://TU-DOMINIO.com',
+          'Access-Control-Allow-Methods': 'POST',
+          'Access-Control-Allow-Headers': 'Content-Type',
+        }
+      });
+    }
+
+    if (request.method !== 'POST') {
+      return new Response('Method not allowed', { status: 405 });
+    }
+
+    const body = await request.json();
+
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${env.GEMINI_API_KEY}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      }
+    );
+
+    const data = await response.json();
+
+    return new Response(JSON.stringify(data), {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'https://TU-DOMINIO.com',
+      }
+    });
+  }
+};
+```
+
+6. Reemplazar `https://TU-DOMINIO.com` con el dominio real del sitio (en los 2 lugares)
+7. Hacer clic en **Desplegar**
+8. Volver al panel del worker → **Ajustes** → **Variables y secretos** → **+ Agregar**
+   - Tipo: **Secreto**
+   - Nombre: `GEMINI_API_KEY`
+   - Valor: pegar la API key de Gemini (sin pasarla por ningún chat)
+9. Hacer clic en **Desplegar**
+
+**URL del worker resultante:** `https://[nombre-worker].[usuario].workers.dev`
+
+---
+
+### 2b. Obtener API key de Gemini
 1. Ir a **aistudio.google.com**
 2. Iniciar sesión con cuenta Google
-3. Menú → "Get API key" → "Create API key"
-4. Probar con:
-```bash
-curl -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=TU_API_KEY" \
--H "Content-Type: application/json" \
--d '{"contents":[{"parts":[{"text":"hola"}]}]}'
-```
-Debe devolver respuesta con `candidates`. Si dice "leaked" o cuota agotada, usar otra key.
+3. **Get API key** → **Create API key** → elegir proyecto
+4. Pegar la key directamente en Cloudflare (paso 8 arriba) — nunca en el chat ni en el código
 
-### Agregar el chatbot al HTML
-Insertar antes de `</body>` el siguiente bloque (CSS + HTML + JS):
+---
+
+### 2c. Agregar el chatbot al HTML
+En el `index.html`, insertar antes de `</body>`:
+
+```javascript
+const GEMINI_URL = 'https://[nombre-worker].[usuario].workers.dev';
+```
+
+**El chatbot NO lleva API key en el HTML** — solo la URL del Worker.
 
 **Personalizar el SYSTEM_PROMPT con:**
 - Nombre y profesión del titular
