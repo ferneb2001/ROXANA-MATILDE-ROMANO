@@ -323,8 +323,68 @@
         .biografia-content {
             text-align: justify;
         }
-        
-        
+
+        /* ===== CV Artístico ===== */
+        .page9 { background: #f8f9fa; color: #2c2c2c; }
+        .page9 .content h2 { color: #2c3e50; font-weight: 600; }
+
+        .cv-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+            line-height: 1.6;
+        }
+        .cv-header {
+            text-align: center;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .cv-name { color: #2c3e50; font-size: 1.6em; margin-bottom: 4px; }
+        .cv-role { color: #555; margin-bottom: 8px; }
+        .cv-meta { color: #666; font-size: 0.9em; margin-bottom: 6px; }
+        .cv-contact { color: #666; font-size: 0.9em; margin-bottom: 4px; }
+        .cv-contact a { color: #2980b9; text-decoration: none; font-weight: 500; }
+        .cv-contact a:hover { text-decoration: underline; }
+        .cv-section {
+            color: #2c3e50;
+            font-size: 1.1em;
+            margin: 24px 0 10px;
+            border-left: 4px solid #e67e22;
+            padding-left: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .cv-list { list-style: none; padding: 0; margin: 0; }
+        .cv-list li {
+            padding: 6px 0 6px 18px;
+            position: relative;
+            border-bottom: 1px solid #ececec;
+            font-size: 0.95em;
+            color: #333;
+        }
+        .cv-list li::before {
+            content: "\2022";
+            color: #e67e22;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        .cv-list li strong { color: #2c3e50; }
+        .cv-download { text-align: center; margin: 30px 0 10px; }
+        .cv-download-btn {
+            display: inline-block;
+            background: #2c3e50;
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+        .cv-download-btn:hover { background: #e67e22; transform: translateY(-2px); }
+
+
         .page-indicator {
             position: fixed;
             top: 20px;
@@ -751,6 +811,7 @@
                     <button onclick="goToPage(6)" class="index-button">CERTIFICADOS</button>
                     <button onclick="goToPage(7)" class="index-button">ARTE EN CRUDO</button>
                     <button onclick="goToPage(8)" class="index-button">CLASES</button>
+                    <button onclick="goToPage(9)" class="index-button">CV ARTÍSTICO</button>
                 </div>
             </div>
         </div>
@@ -859,7 +920,7 @@
                 <div class="classes-container">
                     <h3>ATELIER</h3>
                     <p><em>Un espacio donde la luz respira...</em></p>
-                    <p><strong>B</strong>añado por la generosa luz del sol mendocino, es mucho más que un estudio: es un refugio para el espíritu creativo. Adentrarse en su bohemia es sumergirse en un ambiente introspectivo, en donde tu vocabulario profundo podrá expresarse sobre el lienzo virgen.</p>
+                    <p><strong>A</strong>mparado bajo la generosa luz del sol mendocino, es mucho más que un estudio: es un refugio para el espíritu creativo. Adentrarse en su bohemia es sumergirse en un ambiente introspectivo, en donde tu vocabulario profundo podrá expresarse sobre el lienzo virgen.</p>
                     <p>Ya seas un principiante curioso o un creador experimentado, aquí encontrarás un espacio inspirador y pacífico.</p>
                     <p>Descubre tu potencial y nutre tu talento en un entorno estimulante y acogedor.</p>
                     <p>Estás invitado para que juntos exploremos tu propia abstracción artística.</p>
@@ -897,7 +958,78 @@
                     </div>
                 </div>
             </div>
-        </div></div>
+        </div>
+
+        <!-- Página 9: CV Artístico -->
+        <div class="page page9">
+            <div class="content">
+                <h2>CV Artístico</h2>
+                <div class="cv-container">
+                    <div class="cv-header">
+                        <p class="cv-name"><strong>Roxana Matilde Romano</strong></p>
+                        <p class="cv-role"><em>Artista visual — Pintura</em></p>
+                        <p class="cv-meta">Mendoza, Argentina (1969) &nbsp;·&nbsp; DNI 20.932.216</p>
+                        <p class="cv-contact">
+                            <a href="mailto:roxanamatilderomano@gmail.com">roxanamatilderomano@gmail.com</a> &nbsp;·&nbsp;
+                            <a href="https://wa.me/5492615988180" target="_blank" rel="noopener">+54 9 261 598-8180</a> &nbsp;·&nbsp;
+                            Instagram: <a href="https://instagram.com/roxanamatilderomano2017" target="_blank" rel="noopener">@roxanamatilderomano2017</a>
+                        </p>
+                        <p class="cv-contact">Sitio web: <a href="https://ferneb2001.github.io/ROXANA-MATILDE-ROMANO" target="_blank" rel="noopener">ferneb2001.github.io/ROXANA-MATILDE-ROMANO</a></p>
+                    </div>
+
+                    <h3 class="cv-section">Perfil</h3>
+                    <p>Artista visual mendocina nacida en 1969. A partir del año 2012 inicia su carrera en las artes plásticas, perfeccionándose con los maestros Eduardo Salinas, Daniel Bernal y Egar Murillo. Su obra ha sido distinguida en numerosos salones y se encuentra en colecciones públicas y privadas, con un trabajo elogiosamente reconocido por el colectivo artístico.</p>
+
+                    <h3 class="cv-section">Formación</h3>
+                    <ul class="cv-list">
+                        <li><strong>2025</strong> — Curso "La quimera de la curaduría", dictado por la Prof. Mariel Matoz. Facultad de Artes y Diseño (UNCUYO). Del 27 de octubre al 3 de diciembre de 2025 (15 horas reloj). Resolución N.º 496/25-FA/FAD.</li>
+                        <li><strong>2024</strong> — Diplomatura en Arteterapia Profesional. Institución Badra (Funiced), Córdoba. Total: 350 horas cátedra. Noviembre de 2024.</li>
+                        <li>Perfeccionamiento con los maestros Eduardo Salinas, Daniel Bernal y Egar Murillo.</li>
+                    </ul>
+
+                    <h3 class="cv-section">Muestras individuales</h3>
+                    <ul class="cv-list">
+                        <li><strong>2024</strong> — "Arteh" (hipercerámico).</li>
+                        <li><strong>2014</strong> — "Hipócrita". Nave Cultural, Mendoza.</li>
+                        <li><strong>2013</strong> — "Resiliencia". Nave Cultural, Mendoza (20/08/2013).</li>
+                        <li><strong>2012</strong> — "Origen y orgullo". Salón Malvinas Argentinas, Municipalidad de Las Heras (11/10/2012).</li>
+                    </ul>
+
+                    <h3 class="cv-section">Muestras colectivas y ferias</h3>
+                    <ul class="cv-list">
+                        <li><strong>2025</strong> — "Virus". Legislatura de Mendoza.</li>
+                        <li><strong>2023</strong> — Muestra en la Sala Sergio Sergi, Radio Nacional (Mendoza).</li>
+                        <li><strong>2021</strong> — Reinauguración del Museo ECA. Participación con cuatro obras.</li>
+                        <li><strong>2019</strong> — "Bla Bla". Legislatura de Mendoza.</li>
+                        <li><strong>2017</strong> — "Entropía". Salas Libertad.</li>
+                        <li><strong>2016</strong> — "Cuatro cuerdas". Salas Libertad (12/08/2016).</li>
+                        <li><strong>2014</strong> — "Otredad". Alianza Francesa, Mendoza (19/03/2014).</li>
+                        <li><strong>2012</strong> — Feria del Libro. Le Parc, Mendoza (01/11/2012).</li>
+                        <li>"Arte en construcción I, II y III".</li>
+                        <li>Feria AIRE. Nave Cultural.</li>
+                    </ul>
+
+                    <h3 class="cv-section">Salones, premios y distinciones</h3>
+                    <ul class="cv-list">
+                        <li><strong>2025</strong> — Seleccionada. 43.º Salón de Pintura del CPCE.</li>
+                        <li><strong>2024</strong> — Obra seleccionada: "La paradoja del observador". Salón Vendimia.</li>
+                        <li><strong>2023</strong> — Obra seleccionada: "La sombra de lo inútil". Salón Vendimia.</li>
+                        <li><strong>2022</strong> — Obra seleccionada: "Panóptico". Salón Vendimia.</li>
+                        <li><strong>2021</strong> — Seleccionada. Salón Vendimia.</li>
+                        <li><strong>2017</strong> — "Proyecto Humano", obra seleccionada. 37.º Salón de Pintura del Consejo Profesional de Ciencias Económicas de Mendoza.</li>
+                        <li><strong>2014</strong> — Mención. Salón de Pintura "Juan Gutenberg"; obra: "Luna de miel en el Berghof". Espacio Contemporáneo de Arte (ECA), Mendoza (21/11/2014).</li>
+                        <li><strong>2014</strong> — Primer Premio de Adquisición. 1.º Salón de Pintura Pequeño Formato "Proarte Maipú 2014" (tema: Rostros Universales); obra: "Retrato de Egar Murillo". Maipú, Mendoza, diciembre de 2014.</li>
+                        <li><strong>2013</strong> — Seleccionada. 12.º Salón Provincial de Pintura "Maipú y el Vino", Bodega Vistandes, Maipú (05/12/2013).</li>
+                        <li><strong>2012</strong> — Seleccionada, categoría Pintura. Bienal de Arte Atuel, General Alvear, Mendoza; obra: "Suburbio" (06/10/2012).</li>
+                    </ul>
+
+                    <div class="cv-download">
+                        <a href="CV ARTISTICO/CV ROXANA MATILDE ROMANO.pdf" target="_blank" rel="noopener" class="cv-download-btn">📄 Descargar CV completo (PDF)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
         </div>
 
         <!-- Página 8: Clases -->
@@ -907,7 +1039,7 @@
                 <div class="classes-container">
                     <h3>ATELIER</h3>
                     <p><em>Un espacio donde la luz respira...</em></p>
-                    <p><strong>B</strong>añado por la generosa luz del sol mendocino, es mucho más que un estudio: es un refugio para el espíritu creativo. Adentrarse en su bohemia es sumergirse en un ambiente introspectivo, en donde tu vocabulario profundo podrá expresarse sobre el lienzo virgen.</p>
+                    <p><strong>A</strong>mparado bajo la generosa luz del sol mendocino, es mucho más que un estudio: es un refugio para el espíritu creativo. Adentrarse en su bohemia es sumergirse en un ambiente introspectivo, en donde tu vocabulario profundo podrá expresarse sobre el lienzo virgen.</p>
                     <p>Ya seas un principiante curioso o un creador experimentado, aquí encontrarás un espacio inspirador y pacífico.</p>
                     <p>Descubre tu potencial y nutre tu talento en un entorno estimulante y acogedor.</p>
                     <p>Estás invitado para que juntos exploremos tu propia abstracción artística.</p>
@@ -972,7 +1104,7 @@
     </div>
     
     
-    <div class="page-indicator" id="pageIndicator">1 / 8</div>
+    <div class="page-indicator" id="pageIndicator">1 / 9</div>
     
     <!-- Lightbox -->
     <div id="lightbox" class="lightbox" onclick="closeLightbox()">
@@ -1682,6 +1814,7 @@
             }
         ];
         const certificateData = [
+        "CERTIFICADOS/UNCUYO - Facultad de Artes y Diseno - La quimera de la curaduria 2025.jpg",
         "CERTIFICADOS/DIPLOMATURA EN ARTETERAPIA PROFESIONAL.jpg",
         "CERTIFICADOS/Primer premio Rostros Universales - Obra Retrato Egar Murillo.jpg",
         "CERTIFICADOS/Certificado Bienal Atuel 2012.jpg",
@@ -1696,7 +1829,7 @@
     ];
         
         let currentPageIndex = 0;
-        const totalPages = 8;
+        const totalPages = 9;
         
         function previousPage() {
             if (currentPageIndex > 0) {
@@ -1757,7 +1890,7 @@
                 
                 div.innerHTML = `
                     <img src="${obra.path || 'placeholder.jpg'}" alt="${obra.title || 'Obra'}" class="obra-img" 
-                         onclick="openLightbox('${obra.path}', '${obra.title}', '${obra.technique || ''} ${obra.dimensions || ''} ${obra.year || ''}')"
+                         onclick="openLightbox('${obra.path}', '${obra.title}', '${obra.technique || ''} ${obra.dimensions || ''} ${obra.year || ''}', true)"
                          onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzQ0OTVlIiBvcGFjaXR5PSIwLjMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+T2JyYSBkZSBSb3hhbmE8L3RleHQ+PC9zdmc+">
                     <div class="obra-title">${obra.title || 'Sin título'}</div>
                     <div class="obra-details">
@@ -1793,20 +1926,20 @@
             });
         }
         
-        function openLightbox(imgSrc, title, details) {
+        function openLightbox(imgSrc, title, details, showContact = false) {
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightboxImg');
             const lightboxInfo = document.getElementById('lightboxInfo');
-            
+
             if (lightbox && lightboxImg && lightboxInfo) {
                 lightboxImg.src = imgSrc;
-                lightboxInfo.innerHTML = `<h3>${title}</h3><p>${details}</p>`;
-            
-            // Crear botón de WhatsApp grande
-            const whatsappMsg = `Hola Roxana, me interesa tu obra "${title}"`;
-            const whatsappUrl = `https://wa.me/5492615988180?text=${encodeURIComponent(whatsappMsg)}`;
-            
-            const contactButton = `
+
+            // Botón de WhatsApp: solo para obras del catálogo
+            let contactButton = '';
+            if (showContact) {
+                const whatsappMsg = `Hola Roxana, me interesa tu obra "${title}"`;
+                const whatsappUrl = `https://wa.me/5492615988180?text=${encodeURIComponent(whatsappMsg)}`;
+                contactButton = `
                 <a href="${whatsappUrl}" target="_blank" class="lightbox-contact-button">
                     <svg class="whatsapp-icon" viewBox="0 0 24 24">
                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.570-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488"/>
@@ -1814,9 +1947,10 @@
                     Consultar esta obra
                 </a>
             `;
-            
+            }
+
             lightboxInfo.innerHTML = `<h3>${title}</h3><p>${details}</p>${contactButton}`;
-        
+
                 lightbox.style.display = 'flex';
             }
         }
